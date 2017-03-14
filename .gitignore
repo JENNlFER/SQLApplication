@@ -122,7 +122,7 @@ modules.xml
 .mtj.tmp/
 
 # Package Files #
-*.jar
+[^SimpleSQL].jar
 *.war
 *.ear
 *.zip
