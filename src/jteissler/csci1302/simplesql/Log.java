@@ -1,10 +1,7 @@
 package jteissler.csci1302.simplesql;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * A static utility class for logging buffered string to output files and
@@ -19,53 +16,33 @@ import java.util.List;
  */
 public class Log
 {
-	/** Bold name of the project. */
-	private static final String PROJECT_NAME = "\u001B[1m[SimpleSQL]\u001B[0m ";
-	/** Yellow error code text color */
-	private static final String ERROR_CODE = "\u001B[33m";
-	/** Code to reset all text formatting */
-	private static final String RESET_CODE = "\u001B[0m";
-	/** Styles the error cursor */
-	private static final String CURSOR_CODE = "\u001B[1m\u001B[5m";
-	/** Ends the style of the error cursor */
-	private static final String CURSOR_CODE_END = "\u001B[22m";
-	/** The relative path of the status log */
-	private static final String STATUS_PATH = "status.txt";
-	/** The relative path of the error log */
-	private static final String ERROR_PATH = "error.txt";
-	/** The system-specific newline character */
+	/** System-dependant newline character */
 	private static final String NEWLINE = System.lineSeparator();
 
-	/** Buffered status log writer */
-	private static PrintWriter statusWriter;
-	/** Buffered error log writer */
-	private static PrintWriter errorWriter;
+	/** Function to handle logging status messages */
+	private static BiConsumer<List<String>, String> statusWriter;
 
-	/** Static code which runs upon the first use of this class */
-	static
+	/** Function to handle logging error messages */
+	private static BiConsumer<List<String>, String> errorWriter;
+
+	/**
+	 * Set the function to handle logging status messages.
+	 */
+	public static void setStatusWriter(BiConsumer<List<String>, String> consumer)
 	{
-		try
-		{
-			// Open the writers and leave them open.
-			statusWriter = new PrintWriter(new BufferedWriter(new FileWriter(STATUS_PATH, true)));
-			errorWriter = new PrintWriter(new BufferedWriter(new FileWriter(ERROR_PATH, true)));
-
-			// Register a shutdown hook so the writers release file locks upon program end.
-			Runtime.getRuntime().addShutdownHook(new Thread(() ->
-			{
-				statusWriter.close();
-				errorWriter.close();
-			}));
-		}
-		catch (IOException e)
-		{
-			log(e.getMessage());
-			System.exit(1);
-		}
+		statusWriter = consumer;
 	}
 
 	/**
-	 * Log an SQL status message to file and console.
+	 * Set the function to handle logging error messages.
+	 */
+	public static void setErrorWriter(BiConsumer<List<String>, String> consumer)
+	{
+		errorWriter = consumer;
+	}
+
+	/**
+	 * Log an SQL status message.
 	 *
 	 * @param command Parsed SQL arguments.
 	 * @param status The status message.
@@ -73,23 +50,21 @@ public class Log
 	public static void status(List<String> command, String status)
 	{
 		String out = status + NEWLINE + "(" + String.join(" ", command) + ")";
-		statusWriter.println(out + NEWLINE);
-		log(out);
+		statusWriter.accept(command, out);
 	}
 
 	/**
-	 * Log an SQL error message to file and console.
+	 * Log an SQL error message.
 	 *
 	 * @param error The error message.
 	 */
 	public static void error(String error)
 	{
-		errorWriter.println(error + NEWLINE);
-		log(ERROR_CODE + error + RESET_CODE);
+		errorWriter.accept(null, error);
 	}
 
 	/**
-	 * Logs an SQL error message to file and console.
+	 * Logs an SQL error message.
 	 *
 	 * @param command Parsed SQL arguments.
 	 * @param error The error message.
@@ -97,12 +72,11 @@ public class Log
 	public static void error(List<String> command, String error)
 	{
 		String out = error + NEWLINE + "(" + String.join(" ", command) + ")";
-		errorWriter.println(out + NEWLINE);
-		log(ERROR_CODE + out + RESET_CODE);
+		errorWriter.accept(command, out);
 	}
 
 	/**
-	 * Logs an SQL error message to file and console, along with
+	 * Logs an SQL error message, along with
 	 * an index which points to which SQL argument caused the issue.
 	 *
 	 * @param command Parsed SQL arguments.
@@ -119,14 +93,7 @@ public class Log
 
 		indexString = indexString.replaceAll(".", " ") + "^";
 
-		String out = error + NEWLINE + ERROR_CODE + "(" + String.join(" ", command) + ")" + NEWLINE + indexString;
-		errorWriter.println(out + NEWLINE);
-		log(ERROR_CODE + out + RESET_CODE);
-	}
-
-	public static void log(String log)
-	{
-		System.out.println(PROJECT_NAME + log.replaceAll(NEWLINE, NEWLINE + RESET_CODE + PROJECT_NAME)
-				.replaceAll("\\^", CURSOR_CODE + "^" + CURSOR_CODE_END) + NEWLINE);
+		String out = error + NEWLINE + "(" + String.join(" ", command) + ")" + NEWLINE + indexString;
+		errorWriter.accept(command, out);
 	}
 }
