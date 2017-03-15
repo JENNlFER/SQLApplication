@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<SplitPane dividerPositions="0.08793969849246232" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" scaleShape="false" style="-fx-border-color: black;" styleClass="black" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane maxHeight="40.0" minHeight="40.0" minWidth="0.0" prefHeight="40.0" prefWidth="751.0">
+         <children>
+            <SplitPane dividerPositions="0.25634178905206945" focusTraversable="false" layoutX="63.0" layoutY="-66.0" maxHeight="32.0" minHeight="32.0" prefHeight="32.0" prefWidth="598.0" styleClass="menu-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <AnchorPane maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="38.0" prefWidth="200.0" styleClass="black">
+                     <children>
+                        <MenuBar layoutX="9.0" layoutY="4.0" prefHeight="39.0" prefWidth="188.0" styleClass="black" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="-9.0" AnchorPane.topAnchor="4.0">
+                          <menus>
+                            <Menu mnemonicParsing="false" text="File">
+                              <items>
+                                <MenuItem id="open-sql-script" mnemonicParsing="false" text="Open SQL Script" />
+                                    <MenuItem id="run-sql-script" mnemonicParsing="false" text="Run SQL Script" />
+                                    <MenuItem id="save-sql-script" mnemonicParsing="false" text="Save SQL Script" />
+                              </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Edit">
+                              <items>
+                                <MenuItem id="copy" mnemonicParsing="false" text="Copy " />
+                                    <MenuItem id="paste" mnemonicParsing="false" text="Paste" />
+                                    <MenuItem id="preferences" mnemonicParsing="false" text="Preferences" />
+                              </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Help">
+                              <items>
+                                <MenuItem mnemonicParsing="false" text="About" />
+                              </items>
+                            </Menu>
+                          </menus>
+                        </MenuBar>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-border-color: black;">
+                     <children>
+                        <ToolBar layoutY="-1.0" prefHeight="40.0" prefWidth="588.0" style="-fx-border-color: bblack;" styleClass="black" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
+                          <items>
+                            <Button id="execute-single-command" mnemonicParsing="false" prefHeight="27.0" prefWidth="29.0" styleClass="single-command-button" />
+                              <Button id="execute-all-commands" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="all-commands-button" />
+                              <Button id="clear-commands" mnemonicParsing="false" prefHeight="27.0" prefWidth="28.0" styleClass="sweep-button" />
+                          </items>
+                        </ToolBar>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <SplitPane dividerPositions="0.25671140939597314" layoutX="82.0" layoutY="56.0" prefHeight="359.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <AnchorPane maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="200.0" style="-fx-background-color: #262934;">
+                     <children>
+                        <TreeView id="directory-tree" layoutX="22.0" layoutY="113.0" prefHeight="548.0" prefWidth="200.0" styleClass="directory-tree" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <SplitPane dividerPositions="0.6040145985401459" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" style="-fx-border-color: #262934;">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: blakc;">
+                           <children>
+                              <TextArea id="command-window" layoutX="137.0" layoutY="82.0" prefHeight="327.0" prefWidth="588.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <VBox alignment="CENTER" layoutX="66.0" layoutY="-86.0" prefHeight="213.0" prefWidth="588.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ListView id="status-output" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS" />
+                                    <ListView id="error-output" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS" />
+                                 </children>
+                                 <cursor>
+                                    <Cursor fx:constant="CLOSED_HAND" />
+                                 </cursor>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+              </items>
+            </SplitPane>
+         </children></AnchorPane>
+  </items>
+</SplitPane>
