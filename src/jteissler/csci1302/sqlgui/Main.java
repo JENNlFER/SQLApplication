@@ -15,10 +15,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Workbench.fxml"));
-        primaryStage.setTitle("Hello World");
+        Parent root = FXMLLoader.load(getClass().getResource("resources/Workbench.fxml"));
+        primaryStage.setTitle("SQL Workbench");
         Scene scene = new Scene(root, 800, 600);
-        String css = getClass().getResource("Workbench.css").toExternalForm();
+        String css = getClass().getResource("resources/Workbench.css").toExternalForm();
         scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.show();
