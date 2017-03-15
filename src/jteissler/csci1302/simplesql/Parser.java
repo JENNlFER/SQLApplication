@@ -1,4 +1,4 @@
-package jteissler.csci1320.simplesql;
+package jteissler.csci1302.simplesql;
 
 /**
  * Parser interface which defines a parse method and documents

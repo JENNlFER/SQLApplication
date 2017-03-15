@@ -1,4 +1,4 @@
-package jteissler.csci1320.simplesql;
+package jteissler.csci1302.simplesql;
 
 /**
  * A class which wraps two objects, allowing them to be grouped together.

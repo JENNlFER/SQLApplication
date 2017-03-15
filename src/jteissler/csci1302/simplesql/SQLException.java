@@ -1,4 +1,4 @@
-package jteissler.csci1320.simplesql;
+package jteissler.csci1302.simplesql;
 
 /**
  * Represents an exception that occurs while performing an SQL command.

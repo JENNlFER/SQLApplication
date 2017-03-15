@@ -31,7 +31,7 @@ public class Main extends Application {
 
         ListView<String> list2 = (ListView) scene.lookup("#error-output");
         ObservableList<String> items2 =  FXCollections.observableArrayList (
-                "Error 1", "Error 2", "Error 3", "Error 4", "Error 5");
+                "Error 1", "Error 2", "\u001B[33m" + "Error 3", "Error 4", "Error 5");
         list2.setItems(items2);
         list2.scrollTo(items2.size() - 1);
 
