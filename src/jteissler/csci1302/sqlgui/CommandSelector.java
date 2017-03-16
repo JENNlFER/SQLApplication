@@ -2,11 +2,9 @@ package jteissler.csci1302.sqlgui;
 
 import javafx.scene.control.TextArea;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 /**
+ * Selects the current command or commands in the command input area.
+ *
  * @author J Teissler
  * @date 3/15/17
  */
@@ -22,9 +20,9 @@ public class CommandSelector
 	/**
 	 * @return All the content of the text area.
 	 */
-	public List<String> getContent()
+	public String getContent()
 	{
-		return Arrays.asList(textArea.getText().split("\\r\\n?|\\n"));
+		return textArea.getText();
 	}
 
 	/**
@@ -32,7 +30,7 @@ public class CommandSelector
 	 *
 	 * @param content Lines of content.
 	 */
-	public void setContent(List<String> content)
+	public void setContent(String content)
 	{
 		textArea.setText(String.join(System.lineSeparator(), content));
 	}
@@ -40,18 +38,94 @@ public class CommandSelector
 	/**
 	 * @return The current command selected in the text area.
 	 */
-	public Optional<String> getCommand()
+	public String[] getCommand()
 	{
-		return null;
-		//String selection = textArea.getSelectedText()
+		String selection;
+
+		if (WorkbenchOptions.EXECUTE_HIGHLIGHTED)
+		{
+			selection = textArea.getSelectedText().trim();
+
+			if (!selection.isEmpty())
+			{
+				switch (WorkbenchOptions.COMMAND_DIVIDER)
+				{
+					case SEMICOLON:
+					{
+						return selection.split(";");
+					}
+					case EACH_LINE:
+					{
+						return selection.split("\\r\\n?|\\n");
+					}
+					case EMPTY_LINE:
+					{
+						return selection.split("[\\r?\\n|\\n][\\t ]?[\\r?\\n|\\n]");
+					}
+				}
+			}
+		}
+
+		selection = textArea.getText();
+		String[] split = null;
+
+		switch (WorkbenchOptions.COMMAND_DIVIDER)
+		{
+			case SEMICOLON:
+			{
+				split = selection.split(";");
+				break;
+			}
+			case EACH_LINE:
+			{
+				split = selection.split("\\r\\n?|\\n");
+				break;
+			}
+			case EMPTY_LINE:
+			{
+				split = selection.split("[\\r?\\n|\\n][\\t ]?[\\r?\\n|\\n]");
+				break;
+			}
+		}
+
+		int cursor = textArea.getCaretPosition();
+
+		int index = 0;
+		for (String line : split)
+		{
+			if (cursor >= index && cursor < (index + line.length()))
+			{
+				return new String[]{line};
+			}
+
+			index += line.length();
+		}
+
+		return new String[0];
 	}
 
 	/**
 	 * @return All commands currently in the text area.
 	 */
-	public List<String> getAllCommands()
+	public String[] getAllCommands()
 	{
-		return null;
-	}
+		String selection = textArea.getText().trim();
 
+		switch (WorkbenchOptions.COMMAND_DIVIDER)
+		{
+			case EACH_LINE:
+			{
+				return selection.split("\\r\\n?|\\n");
+			}
+			case EMPTY_LINE:
+			{
+				return selection.split("[\\r?\\n|\\n][\\t ]?[\\r?\\n|\\n]");
+			}
+			case SEMICOLON:
+			default:
+			{
+				return selection.split(";");
+			}
+		}
+	}
 }
