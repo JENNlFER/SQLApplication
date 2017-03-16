@@ -17,6 +17,7 @@ import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -90,7 +91,12 @@ public class SQLWorkbench
 	@FXML
 	private void onRunSingleCommandPressed(ActionEvent event)
 	{
-		System.out.println(new CommandSelector(commandField).getCommand());
+		List<String> string = new CommandSelector(commandField).getCommand();
+
+		for (String s : string)
+		{
+			System.out.println(s);
+		}
 	}
 
 	@FXML
