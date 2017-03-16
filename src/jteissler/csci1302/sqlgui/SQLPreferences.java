@@ -1,5 +1,6 @@
 package jteissler.csci1302.sqlgui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
@@ -10,8 +11,6 @@ import javafx.scene.control.TextField;
  */
 public class SQLPreferences {
 
-    public class SQLWorkbench
-    {
         @FXML
         private CheckBox execHighlighted;
 
@@ -46,8 +45,19 @@ public class SQLPreferences {
         }
 
 
+        @FXML
+        private void onExecHighlightedToggle(ActionEvent event){
 
-    }
+
+
+        }
+
+      
+
+
+
+
+
 
 
 
