@@ -26,6 +26,11 @@ public class CommandSelector
 	 */
 	public List<String> getCommand()
 	{
+		if (textArea.getText().trim().isEmpty())
+		{
+			return new ArrayList<>();
+		}
+
 		if (WorkbenchOptions.EXECUTE_HIGHLIGHTED)
 		{
 			String selection = textArea.getSelectedText().trim();
