@@ -42,7 +42,8 @@ public class CommandSelector
 	 */
 	public Optional<String> getCommand()
 	{
-		String selection = textArea.getSelectedText()
+		return null;
+		//String selection = textArea.getSelectedText()
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class CommandSelector
 	 */
 	public List<String> getAllCommands()
 	{
-
+		return null;
 	}
 
 }
