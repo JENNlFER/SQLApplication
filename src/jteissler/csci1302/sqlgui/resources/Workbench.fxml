@@ -9,6 +9,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -53,9 +54,18 @@
                      <children>
                         <ToolBar layoutY="-1.0" prefHeight="40.0" prefWidth="588.0" styleClass="black" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
                           <items>
-                            <Button id="execute-single-command" fx:id="runSingleCommand" mnemonicParsing="false" prefHeight="27.0" prefWidth="29.0" styleClass="singleCommandButton" />
-                              <Button id="execute-all-commands" fx:id="runAllCommands" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="allCommandsButton" />
-                              <Button id="clear-commands" fx:id="clearCommands" mnemonicParsing="false" prefHeight="27.0" prefWidth="28.0" styleClass="sweepButton" />
+                            <Button id="execute-single-command" fx:id="runSingleCommand" mnemonicParsing="false" onAction="#buttonPressListener" prefHeight="27.0" prefWidth="29.0" styleClass="singleCommandButton">
+                                 <tooltip>
+                                    <Tooltip text="Run Command" />
+                                 </tooltip></Button>
+                              <Button id="execute-all-commands" fx:id="runAllCommands" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="allCommandsButton">
+                                 <tooltip>
+                                    <Tooltip text="Run All Commands" />
+                                 </tooltip></Button>
+                              <Button id="clear-commands" fx:id="clearCommands" mnemonicParsing="false" prefHeight="27.0" prefWidth="28.0" styleClass="sweepButton">
+                                 <tooltip>
+                                    <Tooltip text="Clear Commands" />
+                                 </tooltip></Button>
                           </items>
                         </ToolBar>
                      </children>
@@ -83,8 +93,14 @@
                            <children>
                               <VBox alignment="CENTER" layoutX="66.0" layoutY="-86.0" prefHeight="213.0" prefWidth="588.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <ListView id="commandOutput" fx:id="commandLog" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS" />
-                                    <ListView id="statusOutput" fx:id="statusLog" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS" />
+                                    <ListView id="commandOutput" fx:id="commandLog" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS">
+                                       <tooltip>
+                                          <Tooltip text="Command History" />
+                                       </tooltip></ListView>
+                                    <ListView id="statusOutput" fx:id="statusLog" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS">
+                                       <tooltip>
+                                          <Tooltip text="Status &amp; Error Log" />
+                                       </tooltip></ListView>
                                  </children>
                                  <cursor>
                                     <Cursor fx:constant="CLOSED_HAND" />
