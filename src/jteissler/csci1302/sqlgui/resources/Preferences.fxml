@@ -62,9 +62,9 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="tableFileExt" layoutX="233.0" layoutY="48.0" onKeyPressed="#onTableKeyPressed" />
-            <TextField fx:id="savedFileExt" layoutX="233.0" layoutY="107.0" onKeyPressed="#onSavedKeyPressed" />
-            <TextField fx:id="masterDirectoryName" layoutX="233.0" layoutY="169.0" onKeyPressed="#onMasterDirectoryKeyPressed" />
+            <TextField fx:id="tableFileExt" layoutX="233.0" layoutY="48.0" onKeyTyped="#onTableKeyTyped" />
+            <TextField fx:id="savedFileExt" layoutX="233.0" layoutY="107.0" onKeyTyped="#onSavedKeyTyped" />
+            <TextField fx:id="masterDirectoryName" layoutX="233.0" layoutY="169.0" onKeyTyped="#onMasterDirectoryKeyTyped" />
             <Label layoutX="74.0" layoutY="52.0" prefHeight="17.0" prefWidth="118.0" text="Table File Extension">
                <tooltip>
                   <Tooltip text="This allows you to specify the file extension of all table files in a database" />

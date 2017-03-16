@@ -46,13 +46,33 @@ public class SQLPreferences {
 
 
         @FXML
-        private void onExecHighlightedToggle(ActionEvent event){
+        private void onExecHighlightedToggle(ActionEvent event){}
+
+        @FXML
+        private void onPrintStatusToggle(ActionEvent event){}
+
+        @FXML
+        private void onPrintErrorToggle(ActionEvent event){}
+
+        @FXML
+        private void onTableKeyTyped(ActionEvent event){}
+
+        @FXML
+        private void onSavedKeyTyped(ActionEvent event){}
+
+        @FXML
+        private void onMasterDirectoryKeyTyped(ActionEvent event){}
+
+        @FXML
+        private void onSemiToggle(ActionEvent event){}
+
+        @FXML
+        private void onEndLineToggle(ActionEvent event){}
+
+        @FXML
+        private void onColonToggle(ActionEvent event){}
 
 
-
-        }
-
-      
 
 
 
