@@ -41,6 +41,7 @@ import java.util.Scanner;
 public class SQLWorkbench
 {
 	private Stage preferencesStage;
+	private Stage aboutStage;
 	private CommandSelector selector;
 	private Parser sql;
 
@@ -193,10 +194,36 @@ public class SQLWorkbench
 	}
 
 	@FXML
-	private void onAboutPressed(ActionEvent event){}
+	private void onAboutPressed(ActionEvent event)
+	{
+		if (aboutStage == null)
+		{
+			try
+			{
+				Parent root = FXMLLoader.load(getClass().getResource("resources/about.fxml"));
+				Scene scene = new Scene(root, 600, 400);
+				aboutStage = new Stage();
+				aboutStage.setScene(scene);
+				String css = getClass().getResource("resources/Workbench.css").toExternalForm();
+				scene.getStylesheets().add(css);
+				aboutStage.setTitle("SQL Workbench - About");
+				aboutStage.show();
+				aboutStage.setOnCloseRequest(e -> preferencesStage = null);
+
+
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+
+		}
+	}
 
 	@FXML
-	private void onOpenScript(ActionEvent event){
+	private void onOpenScript(ActionEvent event)
+	{
 
 		FileChooser fc = new FileChooser();
 		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter(
