@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jteissler.csci1302.sqlgui.SQLPreferences">
+   <top>
+      <ButtonBar prefHeight="100.0" prefWidth="634.0" BorderPane.alignment="CENTER">
+         <buttons>
+            <Label prefHeight="42.0" text="Sql Options" />
+            <CheckBox fx:id="execHighlighted" mnemonicParsing="false" onAction="#execHighlightedEvent" prefHeight="17.0" prefWidth="305.0" text="Execute Highlighted">
+               <tooltip>
+                  <Tooltip text="Executes the highlighted command when the run command button is pressed." />
+               </tooltip>
+            </CheckBox>
+            <CheckBox fx:id="sqlPrintStatus" mnemonicParsing="false" onAction="#sqlPrintStatusEvent" text="Print to status log">
+               <tooltip>
+                  <Tooltip text="Prints to a status log file when commands are run successfully" />
+               </tooltip>
+            </CheckBox>
+            <CheckBox fx:id="sqlPrintError" mnemonicParsing="false" onAction="#sqlPrintErrorEvent" text="Print to error log">
+               <tooltip>
+                  <Tooltip text="Prints to an error log file when a command is run unsuccessfully" />
+               </tooltip>
+            </CheckBox>
+         </buttons>
+      </ButtonBar>
+   </top>
+   <bottom>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <buttons>
+            <Label prefHeight="31.0" prefWidth="155.0" text="Command End Options">
+               <tooltip>
+                  <Tooltip text="Choose how to let the workbench decipher how to end your commands in the text editor" />
+               </tooltip>
+            </Label>
+            <RadioButton fx:id="semiButton" minWidth="8.0" mnemonicParsing="false" onAction="#semiButtonPressed" prefHeight="0.0" text=";">
+               <tooltip>
+                  <Tooltip text="Use a semicolon to end your command" />
+               </tooltip>
+            </RadioButton>
+            <RadioButton fx:id="endLineButton" mnemonicParsing="false" onAction="#endLineButtonPressed" text="(ENDLINE)">
+               <tooltip>
+                  <Tooltip text="Use a new line to end your command" />
+               </tooltip>
+            </RadioButton>
+            <RadioButton fx:id="colonButton" mnemonicParsing="false" onAction="#colonButtonPressed" text=":">
+               <tooltip>
+                  <Tooltip text="Use a colon to end your command" />
+               </tooltip>
+            </RadioButton>
+         </buttons>
+      </ButtonBar>
+   </bottom>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="tableFileExt" layoutX="233.0" layoutY="48.0" onAction="#tableFileExtTyped" />
+            <TextField fx:id="savedFileExt" layoutX="233.0" layoutY="107.0" onAction="#savedFileExtTyped" />
+            <TextField fx:id="masterDirectoryName" layoutX="233.0" layoutY="169.0" onAction="#masterDirectoryNameTyped" />
+            <Label layoutX="74.0" layoutY="52.0" prefHeight="17.0" prefWidth="118.0" text="Table File Extension">
+               <tooltip>
+                  <Tooltip text="This allows you to specify the file extension of all table files in a database" />
+               </tooltip>
+            </Label>
+            <Label layoutX="79.0" layoutY="111.0" prefHeight="17.0" prefWidth="108.0" text="Save File Extension">
+               <tooltip>
+                  <Tooltip text="This allows you to specify the file extension to the saved files" />
+               </tooltip>
+            </Label>
+            <Label layoutX="53.0" layoutY="173.0" prefHeight="17.0" prefWidth="128.0" text="Master Directory Name">
+               <tooltip>
+                  <Tooltip text="This allows you to specify the Master Directory Name which all databases and tables will be stored under" />
+               </tooltip>
+            </Label>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
