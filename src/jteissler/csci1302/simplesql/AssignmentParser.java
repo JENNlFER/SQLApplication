@@ -57,6 +57,17 @@ public class AssignmentParser implements Parser
 	public void parse(String input)
 	{
 		// Clean up the input and separate out the individual arguments.
+
+		String[] commands = input.split(";");
+
+		for(String command : commands)
+		{
+			process(command);
+		}
+	}
+
+	private void process(String input)
+	{
 		List<String> args = clean(input);
 
 		if (args.size() >= 1)
