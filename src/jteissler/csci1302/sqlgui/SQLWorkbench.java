@@ -172,7 +172,7 @@ public class SQLWorkbench
 
 				for (File subFile : subFiles)
 				{
-					if (subFile.isFile() || subFile.getName().endsWith("." + WorkbenchOptions.TABLE_FILE_EXTENSION))
+					if (subFile.isFile() && subFile.getName().endsWith("." + WorkbenchOptions.TABLE_FILE_EXTENSION))
 					{
 						database.getChildren().add(new TreeItem<>(subFile.getName().replace("." + WorkbenchOptions.TABLE_FILE_EXTENSION, "")));
 					}
