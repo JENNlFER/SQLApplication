@@ -1,6 +1,7 @@
 package jteissler.csci1302.sqlgui;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -87,7 +88,10 @@ public class SQLWorkbench
 	}
 
 	@FXML
-	private void onRunSingleCommandPressed(ActionEvent event){}
+	private void onRunSingleCommandPressed(ActionEvent event)
+	{
+		System.out.println(new CommandSelector(commandField).getCommand());
+	}
 
 	@FXML
 	private void onRunAllCommandsPressed(ActionEvent event){}
