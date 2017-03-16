@@ -365,22 +365,24 @@ public class SQLWorkbench
         commandField.redo();
     }
 
-    @FXML
-    private void onPreferences(ActionEvent event)
-    {
-        if (preferencesStage == null)
-        {
-            try
-            {
-                Parent root = FXMLLoader.load(getClass().getResource("resources/preferences.fxml"));
-                Scene scene = new Scene(root, 600, 400);
-                preferencesStage = new Stage();
-                preferencesStage.setScene(scene);
-                String css = getClass().getResource("resources/workbench.css").toExternalForm();
-                scene.getStylesheets().add(css);
-                preferencesStage.setTitle("SQL Workbench - Preferences");
-                preferencesStage.show();
-                preferencesStage.setOnCloseRequest(e -> preferencesStage = null);
+	@FXML
+	private void onPreferences(ActionEvent event)
+	{
+		if (preferencesStage == null)
+		{
+			try
+			{
+				Parent root = FXMLLoader.load(getClass().getResource("resources/preferences.fxml"));
+				Scene scene = new Scene(root, 517, 331);
+				preferencesStage = new Stage();
+				preferencesStage.setScene(scene);
+				String css = getClass().getResource("resources/workbench.css").toExternalForm();
+				scene.getStylesheets().add(css);
+				preferencesStage.setTitle("SQL Workbench - Preferences");
+				preferencesStage.setResizable(false);
+				preferencesStage.setOnCloseRequest(e -> preferencesStage = null);
+				preferencesStage.show();
+
 
 				/*
                 Equivalent to
