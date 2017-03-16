@@ -16,19 +16,19 @@
     -fx-opacity: 1;
 }
 
-.single-command-button {
+.singleCommandButton {
     -fx-background-image: url("command.png");
     -fx-background-size: 100%;
     -fx-background-color: black;
 }
 
-.all-commands-button {
+.allCommandsButton {
     -fx-background-image: url("commands.png");
     -fx-background-size: 100%;
     -fx-background-color: black;
 }
 
-.sweep-button {
+.sweepButton {
     -fx-background-image: url("sweep.png");
     -fx-background-size: 100%;
     -fx-background-color: black;

@@ -22,31 +22,6 @@ public class Main extends Application {
         scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        ListView<String> list = (ListView) scene.lookup("#status-output");
-        ObservableList<String> items =  FXCollections.observableArrayList (
-                "Status 1", "Status 2", "Status 3", "Status 4", "Status 5");
-        list.setItems(items);
-        list.scrollTo(items.size() - 1);
-
-        ListView<String> list2 = (ListView) scene.lookup("#error-output");
-        ObservableList<String> items2 =  FXCollections.observableArrayList (
-                "Error 1", "Error 2", "\u001B[33m" + "Error 3", "Error 4", "Error 5");
-        list2.setItems(items2);
-        list2.scrollTo(items2.size() - 1);
-
-        TreeView<String> view = (TreeView) scene.lookup("#directory-tree");
-        TreeItem<String> rootnode = new TreeItem<>("SQL Workbench");
-        rootnode.setExpanded(true);
-
-        TreeItem item = new TreeItem<>("Database 2");
-        item.getChildren().add(new TreeItem<>("Table 1"));
-        rootnode.getChildren().addAll(
-                new TreeItem<>("Database 1"),
-                item ,
-                new TreeItem<>("Database 3")
-        );
-        view.setRoot(rootnode);
     }
 
 

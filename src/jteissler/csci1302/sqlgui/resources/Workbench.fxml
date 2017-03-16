@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.08793969849246232" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" scaleShape="false" style="-fx-border-color: black;" styleClass="black" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.08793969849246232" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" scaleShape="false" style="-fx-border-color: black;" styleClass="black" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jteissler.csci1302.sqlgui.SQLWorkbench">
   <items>
     <AnchorPane maxHeight="40.0" minHeight="40.0" minWidth="0.0" prefHeight="40.0" prefWidth="751.0">
          <children>
@@ -25,21 +25,24 @@
                           <menus>
                             <Menu mnemonicParsing="false" text="File">
                               <items>
-                                <MenuItem id="open-sql-script" mnemonicParsing="false" text="Open SQL Script" />
-                                    <MenuItem id="run-sql-script" mnemonicParsing="false" text="Run SQL Script" />
-                                    <MenuItem id="save-sql-script" mnemonicParsing="false" text="Save SQL Script" />
+                                <MenuItem id="openScript" fx:id="openScript" mnemonicParsing="false" text="Open SQL Script" />
+                                    <MenuItem id="runScript" fx:id="runScript" mnemonicParsing="false" text="Run SQL Script" />
+                                    <MenuItem id="saveScript" fx:id="saveScript" mnemonicParsing="false" text="Save SQL Script" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Edit">
                               <items>
-                                <MenuItem id="copy" mnemonicParsing="false" text="Copy " />
-                                    <MenuItem id="paste" mnemonicParsing="false" text="Paste" />
-                                    <MenuItem id="preferences" mnemonicParsing="false" text="Preferences" />
+                                    <MenuItem id="copy" fx:id="cut" mnemonicParsing="false" text="Cut" />
+                                <MenuItem id="copy" fx:id="copy" mnemonicParsing="false" text="Copy " />
+                                    <MenuItem id="paste" fx:id="paste" mnemonicParsing="false" text="Paste" />
+                                    <MenuItem id="paste" fx:id="undo" mnemonicParsing="false" text="Undo" />
+                                    <MenuItem id="paste" fx:id="redo" mnemonicParsing="false" text="Redo" />
+                                    <MenuItem id="preferences" fx:id="preferences" mnemonicParsing="false" text="Preferences" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Help">
                               <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
+                                <MenuItem id="about" fx:id="about" mnemonicParsing="false" text="About" />
                               </items>
                             </Menu>
                           </menus>
@@ -50,9 +53,9 @@
                      <children>
                         <ToolBar layoutY="-1.0" prefHeight="40.0" prefWidth="588.0" styleClass="black" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
                           <items>
-                            <Button id="execute-single-command" mnemonicParsing="false" prefHeight="27.0" prefWidth="29.0" styleClass="single-command-button" />
-                              <Button id="execute-all-commands" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="all-commands-button" />
-                              <Button id="clear-commands" mnemonicParsing="false" prefHeight="27.0" prefWidth="28.0" styleClass="sweep-button" />
+                            <Button id="execute-single-command" fx:id="runSingleCommand" mnemonicParsing="false" prefHeight="27.0" prefWidth="29.0" styleClass="singleCommandButton" />
+                              <Button id="execute-all-commands" fx:id="runAllCommands" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="allCommandsButton" />
+                              <Button id="clear-commands" fx:id="clearCommands" mnemonicParsing="false" prefHeight="27.0" prefWidth="28.0" styleClass="sweepButton" />
                           </items>
                         </ToolBar>
                      </children>
@@ -66,22 +69,22 @@
               <items>
                 <AnchorPane maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="200.0">
                      <children>
-                        <TreeView id="directory-tree" layoutX="22.0" layoutY="113.0" prefHeight="548.0" prefWidth="200.0" styleClass="directory-tree" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TreeView id="directory-tree" fx:id="structure" layoutX="22.0" layoutY="113.0" prefHeight="548.0" prefWidth="200.0" styleClass="directoryTree" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <SplitPane dividerPositions="0.6040145985401459" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <TextArea id="command-window" layoutX="137.0" layoutY="82.0" prefHeight="327.0" prefWidth="588.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <TextArea id="commandWndow" fx:id="commandField" layoutX="137.0" layoutY="82.0" prefHeight="327.0" prefWidth="588.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
                               <VBox alignment="CENTER" layoutX="66.0" layoutY="-86.0" prefHeight="213.0" prefWidth="588.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <ListView id="status-output" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS" />
-                                    <ListView id="error-output" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS" />
+                                    <ListView id="commandOutput" fx:id="commandLog" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS" />
+                                    <ListView id="statusOutput" fx:id="statusLog" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #262934;" VBox.vgrow="ALWAYS" />
                                  </children>
                                  <cursor>
                                     <Cursor fx:constant="CLOSED_HAND" />
