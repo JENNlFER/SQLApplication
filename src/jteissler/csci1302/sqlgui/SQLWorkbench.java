@@ -10,9 +10,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * @author J Teissler
@@ -21,6 +25,9 @@ import java.io.IOException;
 public class SQLWorkbench
 {
 	private Stage preferencesStage;
+
+	@FXML
+	private Window parentWindow;
 
 	@FXML
 	private MenuItem openScript;
@@ -87,15 +94,46 @@ public class SQLWorkbench
 
 	@FXML
 	private void onClearCommandsPressed(ActionEvent event){}
-
-	@FXML
-	private void onCommandFieldTyped(ActionEvent event){}
+	
 
 	@FXML
 	private void onAboutPressed(ActionEvent event){}
 
 	@FXML
-	private void onOpenScript(ActionEvent event){}
+	private void onOpenScript(ActionEvent event){
+
+		FileChooser fc = new FileChooser();
+		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter(
+				"Sql Scripts", "*." + WorkbenchOptions.SAVE_FILE_EXTENSION);
+
+		fc.getExtensionFilters().add(filter);
+
+
+		File returnVal = fc.showOpenDialog(parentWindow);
+		if(returnVal == null){
+			return;
+
+		}
+		try {
+
+		Scanner inFile = new Scanner(returnVal);
+
+		String someString = "";
+
+		if(inFile.hasNext()) {
+		someString = inFile.useDelimiter("\\Z").next();
+		}
+
+		commandField.setText(someString);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		}
+
+	@FXML
+	private void setParent(Window parent){parentWindow = parent;}
 
 	@FXML
 	private void onRunScript(ActionEvent event){}
@@ -134,6 +172,20 @@ public class SQLWorkbench
 				preferencesStage.setTitle("SQL Workbench - Preferences");
 				preferencesStage.show();
 				preferencesStage.setOnCloseRequest(e -> preferencesStage = null);
+
+				/*
+				Equivalent to
+				preferencesStage.setOnCloseRequest(new EventHandler<WindowEvent>()
+                {
+                    @Override
+                    public void handle(WindowEvent event)
+                    {
+                        preferencesStage = null;
+                    }
+                });
+
+				 */
+
 			}
 			catch (IOException e)
 			{
