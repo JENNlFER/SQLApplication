@@ -278,14 +278,15 @@ public class SQLWorkbench
 			try
 			{
 				Parent root = FXMLLoader.load(getClass().getResource("resources/preferences.fxml"));
-				Scene scene = new Scene(root, 600, 400);
+				Scene scene = new Scene(root, 517, 331);
 				preferencesStage = new Stage();
 				preferencesStage.setScene(scene);
 				String css = getClass().getResource("resources/workbench.css").toExternalForm();
 				scene.getStylesheets().add(css);
 				preferencesStage.setTitle("SQL Workbench - Preferences");
-				preferencesStage.show();
+				preferencesStage.setResizable(false);
 				preferencesStage.setOnCloseRequest(e -> preferencesStage = null);
+				preferencesStage.show();
 
 				/*
 				Equivalent to
