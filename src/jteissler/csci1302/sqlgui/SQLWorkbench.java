@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,9 +21,16 @@ import jteissler.csci1302.simplesql.AssignmentParser;
 import jteissler.csci1302.simplesql.Log;
 import jteissler.csci1302.simplesql.Parser;
 import jteissler.csci1302.simplesql.SQLDatabase;
+import jteissler.csci1302.simplesql.SQLException;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.Scanner;
 
@@ -80,6 +88,7 @@ public class SQLWorkbench
 
 	@FXML
 	private TreeView<String> structure;
+	private TreeItem<String> structureRoot;
 
 	@FXML
 	private TextArea commandField;
@@ -124,24 +133,63 @@ public class SQLWorkbench
 			statuses.add(status);
 			statusLog.scrollTo(statuses.size() - 1);
 		});
+
+		structureRoot = new TreeItem<>("SQL Database Schema");
+		structure.setRoot(structureRoot);
+		walkDirectoryTree();
+		structureRoot.setExpanded(true);
 	}
 
 	@FXML
 	private void onRunSingleCommandPressed(ActionEvent event)
 	{
 		sql.parse(selector.getCommand());
+		walkDirectoryTree();
 	}
 
 	@FXML
 	private void onRunAllCommandsPressed(ActionEvent event)
 	{
 		sql.parse(selector.getAllCommands());
+		walkDirectoryTree();
 	}
 
 	@FXML
 	private void onClearCommandsPressed(ActionEvent event)
 	{
 		commandField.clear();
+	}
+
+	private void walkDirectoryTree()
+	{
+		structureRoot.getChildren().clear();
+		File dir = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		File[] files = dir.listFiles();
+
+		if (files == null)
+		{
+			return;
+		}
+
+		for (File file : files)
+		{
+			if (file.isDirectory())
+			{
+				TreeItem<String> database = new TreeItem<>(file.getName());
+				File[] subFiles = file.listFiles();
+
+				for (File subFile : subFiles)
+				{
+					if (subFile.isFile() || subFile.getName().endsWith("." + WorkbenchOptions.TABLE_FILE_EXTENSION))
+					{
+						database.getChildren().add(new TreeItem<>(subFile.getName().replace("." + WorkbenchOptions.TABLE_FILE_EXTENSION, "")));
+					}
+				}
+
+				structureRoot.getChildren().add(database);
+				database.setExpanded(true);
+			}
+		}
 	}
 
 	@FXML
