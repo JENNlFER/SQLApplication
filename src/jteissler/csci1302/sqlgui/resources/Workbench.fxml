@@ -26,24 +26,24 @@
                           <menus>
                             <Menu mnemonicParsing="false" text="File">
                               <items>
-                                <MenuItem id="openScript" fx:id="openScript" mnemonicParsing="false" text="Open SQL Script" />
-                                    <MenuItem id="runScript" fx:id="runScript" mnemonicParsing="false" text="Run SQL Script" />
-                                    <MenuItem id="saveScript" fx:id="saveScript" mnemonicParsing="false" text="Save SQL Script" />
+                                <MenuItem id="openScript" fx:id="openScript" mnemonicParsing="false" onAction="#onOpenScript" text="Open SQL Script" />
+                                    <MenuItem id="runScript" fx:id="runScript" mnemonicParsing="false" onAction="#onRunScript" text="Run SQL Script" />
+                                    <MenuItem id="saveScript" fx:id="saveScript" mnemonicParsing="false" onAction="#onSaveScript" text="Save SQL Script" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Edit">
                               <items>
-                                    <MenuItem id="copy" fx:id="cut" mnemonicParsing="false" text="Cut" />
-                                <MenuItem id="copy" fx:id="copy" mnemonicParsing="false" text="Copy " />
-                                    <MenuItem id="paste" fx:id="paste" mnemonicParsing="false" text="Paste" />
-                                    <MenuItem id="paste" fx:id="undo" mnemonicParsing="false" text="Undo" />
-                                    <MenuItem id="paste" fx:id="redo" mnemonicParsing="false" text="Redo" />
-                                    <MenuItem id="preferences" fx:id="preferences" mnemonicParsing="false" text="Preferences" />
+                                    <MenuItem id="copy" fx:id="cut" mnemonicParsing="false" onAction="#onCut" text="Cut" />
+                                <MenuItem id="copy" fx:id="copy" mnemonicParsing="false" onAction="#onCopy" text="Copy " />
+                                    <MenuItem id="paste" fx:id="paste" mnemonicParsing="false" onAction="#onPaste" text="Paste" />
+                                    <MenuItem id="paste" fx:id="undo" mnemonicParsing="false" onAction="#onUndo" text="Undo" />
+                                    <MenuItem id="paste" fx:id="redo" mnemonicParsing="false" onAction="#onRedo" text="Redo" />
+                                    <MenuItem id="preferences" fx:id="preferences" mnemonicParsing="false" onAction="#onPreferences" text="Preferences" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Help">
                               <items>
-                                <MenuItem id="about" fx:id="about" mnemonicParsing="false" text="About" />
+                                <MenuItem id="about" fx:id="about" mnemonicParsing="false" onAction="#onAboutPressed" text="About" />
                               </items>
                             </Menu>
                           </menus>
@@ -54,15 +54,15 @@
                      <children>
                         <ToolBar layoutY="-1.0" prefHeight="40.0" prefWidth="588.0" styleClass="black" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
                           <items>
-                            <Button id="execute-single-command" fx:id="runSingleCommand" mnemonicParsing="false" prefHeight="27.0" prefWidth="29.0" styleClass="singleCommandButton">
+                            <Button id="execute-single-command" fx:id="runSingleCommand" mnemonicParsing="false" onAction="#onRunSingleCommandPressed" prefHeight="27.0" prefWidth="29.0" styleClass="singleCommandButton">
                                  <tooltip>
                                     <Tooltip text="Run Command" />
                                  </tooltip></Button>
-                              <Button id="execute-all-commands" fx:id="runAllCommands" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="allCommandsButton">
+                              <Button id="execute-all-commands" fx:id="runAllCommands" mnemonicParsing="false" onAction="#onRunAllCommandsPressed" prefHeight="27.0" prefWidth="27.0" styleClass="allCommandsButton">
                                  <tooltip>
                                     <Tooltip text="Run All Commands" />
                                  </tooltip></Button>
-                              <Button id="clear-commands" fx:id="clearCommands" mnemonicParsing="false" prefHeight="27.0" prefWidth="28.0" styleClass="sweepButton">
+                              <Button id="clear-commands" fx:id="clearCommands" mnemonicParsing="false" onAction="#onClearCommandsPressed" prefHeight="27.0" prefWidth="28.0" styleClass="sweepButton">
                                  <tooltip>
                                     <Tooltip text="Clear Commands" />
                                  </tooltip></Button>
@@ -86,7 +86,7 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <TextArea id="commandField" fx:id="commandField" layoutX="137.0" layoutY="82.0" prefHeight="327.0" prefWidth="588.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <TextArea id="commandField" fx:id="commandField" layoutX="137.0" layoutY="82.0" onKeyTyped="#onCommandFieldTyped" prefHeight="327.0" prefWidth="588.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

@@ -72,13 +72,4 @@ public class SQLPreferences {
         @FXML
         private void onColonToggle(ActionEvent event){}
 
-
-
-
-
-
-
-
-
-
 }

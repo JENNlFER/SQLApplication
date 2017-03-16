@@ -1,5 +1,6 @@
 package jteissler.csci1302.sqlgui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -70,6 +71,47 @@ public class SQLWorkbench
 
 	}
 
+	@FXML
+	private void onRunSingleCommandPressed(ActionEvent event){}
+
+	@FXML
+	private void onRunAllCommandsPressed(ActionEvent event){}
+
+	@FXML
+	private void onClearCommandsPressed(ActionEvent event){}
+
+	@FXML
+	private void onCommandFieldTyped(ActionEvent event){}
+
+	@FXML
+	private void onAboutPressed(ActionEvent event){}
+
+	@FXML
+	private void onOpenScript(ActionEvent event){}
+
+	@FXML
+	private void onRunScript(ActionEvent event){}
+
+	@FXML
+	private void onSaveScript(ActionEvent event){}
+
+	@FXML
+	private void onCut(ActionEvent event){commandField.cut();}
+
+	@FXML
+	private void onCopy(ActionEvent event){commandField.copy();}
+
+	@FXML
+	private void onPaste(ActionEvent event){commandField.paste();}
+
+	@FXML
+	private void onUndo(ActionEvent event){commandField.undo();}
+
+	@FXML
+	private void onRedo(ActionEvent event){commandField.redo();}
+
+	@FXML
+	private void onPreferences(ActionEvent event){}
 
 
 }
