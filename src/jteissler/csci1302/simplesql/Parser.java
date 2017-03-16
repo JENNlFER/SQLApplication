@@ -1,5 +1,7 @@
 package jteissler.csci1302.simplesql;
 
+import java.util.List;
+
 /**
  * Parser interface which defines a parse method and documents
  * which SQL methods should be supported by the parser.
@@ -29,4 +31,11 @@ public interface Parser
 	 * @param input The user input string.
 	 */
 	void parse(String input);
+
+	/**
+	 * Alias for {@link Parser#parse(String)} but for multiple commands.
+	 *
+	 * @param input A list of SQL commands.
+	 */
+	void parse(List<String> input);
 }

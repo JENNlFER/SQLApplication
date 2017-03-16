@@ -66,6 +66,20 @@ public class AssignmentParser implements Parser
 		}
 	}
 
+	/**
+	 * Alias for {@link Parser#parse(String)} but for multiple commands.
+	 *
+	 * @param input A list of SQL commands.
+	 */
+	@Override
+	public void parse(List<String> input)
+	{
+		for(String command : input)
+		{
+			process(command);
+		}
+	}
+
 	private void process(String input)
 	{
 		List<String> args = clean(input);
@@ -429,6 +443,12 @@ public class AssignmentParser implements Parser
 				{
 					if (args.size() >= 2)
 					{
+						if (args.get(1).equalsIgnoreCase(INTO))
+						{
+							Log.error(args, 1, "No value was provided to INSERT.");
+							return;
+						}
+
 						if (args.size() >= 3 && args.get(2).equalsIgnoreCase(INTO))
 						{
 							if (args.size() >= 4)

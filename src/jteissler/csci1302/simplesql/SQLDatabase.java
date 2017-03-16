@@ -1,5 +1,7 @@
 package jteissler.csci1302.simplesql;
 
+import jteissler.csci1302.sqlgui.WorkbenchOptions;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -26,13 +28,13 @@ import java.util.Scanner;
  */
 public class SQLDatabase implements StringDatabase
 {
-	/** File extension for table files */
-	private static final String EXTENSION = ".tab";
-
 	@Override
 	public void createDatabase(String database) throws SQLException
 	{
-		File file = new File(database);
+		File master = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		if (!master.exists()) master.mkdir();
+
+		File file = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database);
 
 		// Check if the database already exists
 		if (!file.exists() || file.isFile())
@@ -52,7 +54,10 @@ public class SQLDatabase implements StringDatabase
 	@Override
 	public void dropDatabase(String database) throws SQLException
 	{
-		Path directory = Paths.get(database);
+		File master = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		if (!master.exists()) master.mkdir();
+
+		Path directory = Paths.get(WorkbenchOptions.MASTER_DIRECTORY + "/" + database);
 		try
 		{
 			// Iterate over the directory structure and delete the database along with all sub-directories and files.
@@ -87,12 +92,15 @@ public class SQLDatabase implements StringDatabase
 	@Override
 	public void createTable(String database, String table) throws SQLException
 	{
-		File directory = new File(database);
+		File master = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		if (!master.exists()) master.mkdir();
+
+		File directory = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database);
 
 		// Ensure the database exists to create the table in.
 		if (directory.exists())
 		{
-			File file = new File(database + "/" + table + EXTENSION);
+			File file = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database + "/" + table + "." + WorkbenchOptions.TABLE_FILE_EXTENSION);
 
 			// Check if the table already exists.
 			if (!file.exists())
@@ -122,12 +130,15 @@ public class SQLDatabase implements StringDatabase
 	@Override
 	public void dropTable(String database, String table) throws SQLException
 	{
-		File directory = new File(database);
+		File master = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		if (!master.exists()) master.mkdir();
+
+		File directory = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database);
 
 		// Ensure the database exists to drop the table from.
 		if (directory.exists())
 		{
-			File file = new File(database + "/" + table + EXTENSION);
+			File file = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database + "/" + table + "." + WorkbenchOptions.TABLE_FILE_EXTENSION);
 
 			// Check if the table currently exists.
 			if (file.exists())
@@ -156,12 +167,15 @@ public class SQLDatabase implements StringDatabase
 	@Override
 	public void insert(String database, String table, String value) throws SQLException
 	{
-		File directory = new File(database);
+		File master = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		if (!master.exists()) master.mkdir();
+
+		File directory = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database);
 
 		// Ensure the database exists.
 		if (directory.exists())
 		{
-			File file = new File(database + "/" + table + EXTENSION);
+			File file = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database + "/" + table + "." + WorkbenchOptions.TABLE_FILE_EXTENSION);
 
 			// Ensure the table exists.
 			if (file.exists())
@@ -205,12 +219,15 @@ public class SQLDatabase implements StringDatabase
 	@Override
 	public long update(String database, String table, String value, String search) throws SQLException
 	{
-		File directory = new File(database);
+		File master = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		if (!master.exists()) master.mkdir();
+
+		File directory = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database);
 
 		// Ensure the database exists.
 		if (directory.exists())
 		{
-			File file = new File(database + "/" + table + EXTENSION);
+			File file = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database + "/" + table + "." + WorkbenchOptions.TABLE_FILE_EXTENSION);
 
 			// Ensure the table exists.
 			if (file.exists())
@@ -289,13 +306,16 @@ public class SQLDatabase implements StringDatabase
 	@Override
 	public long delete(String database, String table, String search) throws SQLException
 	{
-		File directory = new File(database);
+		File master = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		if (!master.exists()) master.mkdir();
+
+		File directory = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database);
 		String nullFix = search == null ? "Values were" : "Value \"" + search + "\" was";
 
 		// Ensure the database exists.
 		if (directory.exists())
 		{
-			File file = new File(database + "/" + table + EXTENSION);
+			File file = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database + "/" + table + "." + WorkbenchOptions.TABLE_FILE_EXTENSION);
 
 			// Ensure the table exists.
 			if (file.exists())
@@ -374,13 +394,16 @@ public class SQLDatabase implements StringDatabase
 	@Override
 	public List<Pair<Long, String>> select(String database, String table, String search) throws SQLException
 	{
-		File directory = new File(database);
+		File master = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		if (!master.exists()) master.mkdir();
+
+		File directory = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database);
 		String nullFix = search == null ? "Values were" : "Value \"" + search + "\" was";
 
 		// Ensure the database exists.
 		if (directory.exists())
 		{
-			File file = new File(database + "/" + table + EXTENSION);
+			File file = new File(WorkbenchOptions.MASTER_DIRECTORY + "/" + database + "/" + table + "." + WorkbenchOptions.TABLE_FILE_EXTENSION);
 
 			// Ensure the file exists.
 			if (file.exists())

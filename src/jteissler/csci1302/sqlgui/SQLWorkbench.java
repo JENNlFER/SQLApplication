@@ -1,5 +1,7 @@
 package jteissler.csci1302.sqlgui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,6 +16,10 @@ import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import jteissler.csci1302.simplesql.AssignmentParser;
+import jteissler.csci1302.simplesql.Log;
+import jteissler.csci1302.simplesql.Parser;
+import jteissler.csci1302.simplesql.SQLDatabase;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +33,8 @@ import java.util.Scanner;
 public class SQLWorkbench
 {
 	private Stage preferencesStage;
+	private CommandSelector selector;
+	private Parser sql;
 
 	@FXML
 	private Window parentWindow;
@@ -77,34 +85,64 @@ public class SQLWorkbench
 	private TextArea commandField;
 
 	@FXML
-	private ListView commandLog;
+	private ListView<String> commandLog;
+	private ObservableList<String> commands = FXCollections.observableArrayList();
 
 	@FXML
 	private ListView statusLog;
+	private ObservableList statuses = FXCollections.observableArrayList();
 
 	@FXML
 	private void initialize()
 	{
+		sql = new AssignmentParser(new SQLDatabase());
+		selector = new CommandSelector(commandField);
 
+		commandLog.setItems(commands);
+		statusLog.setItems(statuses);
+
+		Log.setStatusWriter((command, status) ->
+		{
+			if (!command.isEmpty())
+			{
+				commands.add((commands.size() + 1) + ": " + String.join(" ", command));
+				commandLog.scrollTo(commands.size() - 1);
+			}
+
+			statuses.add(status);
+			statusLog.scrollTo(statuses.size() - 1);
+		});
+
+		Log.setErrorWriter((command, status) ->
+		{
+			if (!command.isEmpty())
+			{
+				commands.add((commands.size() + 1) + ": " + String.join(" ", command));
+				commandLog.scrollTo(commands.size() - 1);
+			}
+
+			statuses.add(status);
+			statusLog.scrollTo(statuses.size() - 1);
+		});
 	}
 
 	@FXML
 	private void onRunSingleCommandPressed(ActionEvent event)
 	{
-		List<String> string = new CommandSelector(commandField).getCommand();
-
-		for (String s : string)
-		{
-			System.out.println(s);
-		}
+		sql.parse(selector.getCommand());
 	}
 
 	@FXML
-	private void onRunAllCommandsPressed(ActionEvent event){}
+	private void onRunAllCommandsPressed(ActionEvent event)
+	{
+		sql.parse(selector.getAllCommands());
+	}
 
 	@FXML
-	private void onClearCommandsPressed(ActionEvent event){}
-	
+	private void onClearCommandsPressed(ActionEvent event)
+	{
+		commandField.clear();
+	}
 
 	@FXML
 	private void onAboutPressed(ActionEvent event){}
