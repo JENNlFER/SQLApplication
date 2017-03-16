@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="498.0" text="About" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="412.0" prefWidth="714.0">
-         <children>
-            <TextArea layoutX="14.0" layoutY="14.0" prefHeight="413.0" prefWidth="496.0" text="Placeholder text&#10;&#10;&#10;sql workbench emulation" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children></AnchorPane>
-  </content>
-</TitledPane>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea layoutX="11.0" layoutY="9.0" prefHeight="382.0" prefWidth="576.0" text="SQL WORKBENCH by Kyle Turner and Jeremy Teissler emulates the actual SQL WORKBENCH&#10;IDE. Our Version allows for various commands to be entered into the command editor, and displays&#10;status and error log messages.&#10;&#10;&#10;In preferences you can do various things as well with our emulator. For instance, you can choose to&#10;have status and error log files created. Also, it is to your choosing how you break up commands &#10;within the editor. We allow for this to be completed through an empty line, an end of line character, &#10;or even a semicolon.&#10;&#10;&#10;Additionally, we allow for you to open, save, or even run various sql scripts. The file extensions of these&#10;types of files can also be edited within our preferences window. The command editor itself follows&#10;the mysql language. This is in conjunction with commands like CREATE DATABASE or INSERT &quot;&quot; INTO.&#10;&#10;&#10;The three jpeg like icons enable you to use three common commands with your commands in the &#10;editor.For instance, the lightning bolt runs all commands while the lightning bolt with the I within &#10;it allows only one command that is either highlighted or the cursor is on to be run. This preference&#10; is also handled in our (you guessed it) preferences tab. Play around with the editor and experience&#10;our user friendly interface with complex features made simple.&#10;&#10;&#10;&#10;&#10;" />
+   </children>
+</Pane>
