@@ -3,7 +3,6 @@ package jteissler.csci1302.sqlgui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,17 +20,9 @@ import jteissler.csci1302.simplesql.AssignmentParser;
 import jteissler.csci1302.simplesql.Log;
 import jteissler.csci1302.simplesql.Parser;
 import jteissler.csci1302.simplesql.SQLDatabase;
-import jteissler.csci1302.simplesql.SQLException;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -204,7 +195,7 @@ public class SQLWorkbench
 				Scene scene = new Scene(root, 600, 400);
 				aboutStage = new Stage();
 				aboutStage.setScene(scene);
-				String css = getClass().getResource("resources/Workbench.css").toExternalForm();
+				String css = getClass().getResource("resources/workbench.css").toExternalForm();
 				scene.getStylesheets().add(css);
 				aboutStage.setTitle("SQL Workbench - About");
 				aboutStage.show();
@@ -290,7 +281,7 @@ public class SQLWorkbench
 				Scene scene = new Scene(root, 600, 400);
 				preferencesStage = new Stage();
 				preferencesStage.setScene(scene);
-				String css = getClass().getResource("resources/Workbench.css").toExternalForm();
+				String css = getClass().getResource("resources/workbench.css").toExternalForm();
 				scene.getStylesheets().add(css);
 				preferencesStage.setTitle("SQL Workbench - Preferences");
 				preferencesStage.show();
