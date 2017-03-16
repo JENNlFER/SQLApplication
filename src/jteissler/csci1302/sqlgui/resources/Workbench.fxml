@@ -56,7 +56,7 @@
                           <items>
                             <Button id="execute-single-command" fx:id="runSingleCommand" mnemonicParsing="false" onAction="#onRunSingleCommandPressed" prefHeight="27.0" prefWidth="29.0" styleClass="singleCommandButton">
                                  <tooltip>
-                                    <Tooltip text="Run Command" />
+                                    <Tooltip text="Run Selected Command" />
                                  </tooltip></Button>
                               <Button id="execute-all-commands" fx:id="runAllCommands" mnemonicParsing="false" onAction="#onRunAllCommandsPressed" prefHeight="27.0" prefWidth="27.0" styleClass="allCommandsButton">
                                  <tooltip>

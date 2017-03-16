@@ -2,11 +2,17 @@ package jteissler.csci1302.sqlgui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeView;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * @author J Teissler
@@ -14,6 +20,8 @@ import javafx.scene.control.TreeView;
  */
 public class SQLWorkbench
 {
+	private Stage preferencesStage;
+
 	@FXML
 	private MenuItem openScript;
 
@@ -111,7 +119,29 @@ public class SQLWorkbench
 	private void onRedo(ActionEvent event){commandField.redo();}
 
 	@FXML
-	private void onPreferences(ActionEvent event){}
+	private void onPreferences(ActionEvent event)
+	{
+		if (preferencesStage == null)
+		{
+			try
+			{
+				Parent root = FXMLLoader.load(getClass().getResource("resources/preferences.fxml"));
+				Scene scene = new Scene(root, 600, 400);
+				preferencesStage = new Stage();
+				preferencesStage.setScene(scene);
+				String css = getClass().getResource("resources/Workbench.css").toExternalForm();
+				scene.getStylesheets().add(css);
+				preferencesStage.setTitle("SQL Workbench - Preferences");
+				preferencesStage.show();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+
+		}
+	}
 
 
 }
