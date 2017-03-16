@@ -1,5 +1,12 @@
 package jteissler.csci1302.simplesql;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import jteissler.csci1302.sqlgui.WorkbenchOptions;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -25,6 +32,34 @@ public class Log
 	/** Function to handle logging error messages */
 	private static BiConsumer<List<String>, String> errorWriter;
 
+
+	/** Buffered status log writer */
+	private static PrintWriter statusFileWriter;
+	/** Buffered error log writer */
+	private static PrintWriter errorFileWriter;
+
+	/** Static code which runs upon the first use of this class */
+	static
+	{
+		try
+		{
+			// Open the writers and leave them open.
+			statusFileWriter = new PrintWriter(new BufferedWriter(new FileWriter("status.log", true)));
+			errorFileWriter = new PrintWriter(new BufferedWriter(new FileWriter("error.log", true)));
+
+			// Register a shutdown hook so the writers release file locks upon program end.
+			Runtime.getRuntime().addShutdownHook(new Thread(() ->
+			{
+				statusFileWriter.close();
+				errorFileWriter.close();
+			}));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Set the function to handle logging status messages.
 	 */
@@ -41,6 +76,7 @@ public class Log
 		errorWriter = consumer;
 	}
 
+
 	/**
 	 * Log an SQL status message.
 	 *
@@ -51,16 +87,11 @@ public class Log
 	{
 		String out = status + NEWLINE + "(" + String.join(" ", command) + ")";
 		statusWriter.accept(command, out);
-	}
 
-	/**
-	 * Log an SQL error message.
-	 *
-	 * @param error The error message.
-	 */
-	public static void error(String error)
-	{
-		errorWriter.accept(null, error);
+		if (WorkbenchOptions.USE_STATUS_LOG)
+		{
+			statusFileWriter.println(out + NEWLINE);
+		}
 	}
 
 	/**
@@ -73,6 +104,11 @@ public class Log
 	{
 		String out = error + NEWLINE + "(" + String.join(" ", command) + ")";
 		errorWriter.accept(command, out);
+
+		if (WorkbenchOptions.USE_ERROR_LOG)
+		{
+			errorFileWriter.println(out + NEWLINE);
+		}
 	}
 
 	/**
@@ -95,5 +131,10 @@ public class Log
 
 		String out = error + NEWLINE + "(" + String.join(" ", command) + ")" + NEWLINE + indexString;
 		errorWriter.accept(command, out);
+
+		if (WorkbenchOptions.USE_ERROR_LOG)
+		{
+			errorFileWriter.println(out + NEWLINE);
+		}
 	}
 }

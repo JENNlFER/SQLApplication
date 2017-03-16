@@ -381,7 +381,7 @@ public class SQLWorkbench
 				scene.getStylesheets().add(css);
 				preferencesStage.setTitle("SQL Workbench - Preferences");
 				preferencesStage.setResizable(false);
-				preferencesStage.setOnCloseRequest(e -> preferencesStage = null);
+				preferencesStage.setOnCloseRequest(e -> {preferencesStage = null; walkDirectoryTree();});
 				preferencesStage.show();
 
 
