@@ -133,6 +133,7 @@ public class SQLWorkbench
 				scene.getStylesheets().add(css);
 				preferencesStage.setTitle("SQL Workbench - Preferences");
 				preferencesStage.show();
+				preferencesStage.setOnCloseRequest(e -> preferencesStage = null);
 			}
 			catch (IOException e)
 			{
