@@ -52,18 +52,19 @@ public class SQLPreferences
 
         execHighlighted.setSelected(WorkbenchOptions.EXECUTE_HIGHLIGHTED);
         sqlPrintStatus.setSelected(WorkbenchOptions.USE_STATUS_LOG);
-        sqlPrintStatus.setSelected(WorkbenchOptions.USE_ERROR_LOG);
+        sqlPrintError.setSelected(WorkbenchOptions.USE_ERROR_LOG);
 
-        switch(WorkbenchOptions.COMMAND_DIVIDER){
+        switch (WorkbenchOptions.COMMAND_DIVIDER)
+        {
 
             case SEMICOLON:
                 semiButton.setSelected(true);
                 break;
             case EACH_LINE:
-                emptyLineButton.setSelected(true);
+                eachLineButton.setSelected(true);
                 break;
             case EMPTY_LINE:
-                eachLineButton.setSelected(true);
+                emptyLineButton.setSelected(true);
                 break;
 
         }
@@ -153,6 +154,4 @@ public class SQLPreferences
         WorkbenchOptions.COMMAND_DIVIDER = WorkbenchOptions.CommandDivider.EACH_LINE;
 
     }
-
-
 }

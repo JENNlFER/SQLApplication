@@ -77,8 +77,7 @@ public class CommandSelector
 		int begin = 0;
 		int end = 0;
 
-		if (cursor > 0 && (text[cursor - 1] == '\n' || text[cursor - 1] == '\r')
-				&& (text.length > cursor + 1 && text[cursor + 1] != '\r' && text[cursor + 1] != '\n'))
+		if (cursor > 0 && (text[cursor - 1] == '\n' || text[cursor - 1] == '\r') && (text.length > cursor + 1 && text[cursor + 1] != '\r' && text[cursor + 1] != '\n'))
 		{
 			return new ArrayList<>();
 		}
@@ -159,10 +158,6 @@ public class CommandSelector
 							end = i;
 						}
 
-						System.out.println("begin = " + begin);
-						System.out.println("cursor = " + cursor);
-						System.out.println("end = " + end);
-
 						if (begin <= cursor && cursor < end)
 						{
 							break;
@@ -198,7 +193,7 @@ public class CommandSelector
 			}
 			case EACH_LINE:
 			{
-				split =  selection.split("\\r\\n?|\\n");
+				split = selection.split("\\r\\n?|\\n");
 				break;
 			}
 			case EMPTY_LINE:
