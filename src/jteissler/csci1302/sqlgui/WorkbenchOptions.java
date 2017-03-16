@@ -20,7 +20,22 @@ public class WorkbenchOptions
 
 	public enum CommandDivider
 	{
-		EACH_LINE, EMPTY_LINE, SEMICOLON
+		SEMICOLON("Commands are ended by semicolons"),
+		EACH_LINE("One command per line"),
+		EMPTY_LINE("Commands are separated by empty lines");
+
+		private final String name;
+
+		CommandDivider(String name)
+		{
+			this.name = name;
+		}
+
+		@Override
+		public String toString()
+		{
+			return name;
+		}
 	}
 
 }
