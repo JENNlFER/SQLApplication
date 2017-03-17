@@ -27,10 +27,10 @@ public class Log
 	private static final String NEWLINE = System.lineSeparator();
 
 	/** Function to handle logging status messages */
-	private static BiConsumer<List<String>, String> statusWriter;
+	private static BiConsumer<String, String> statusWriter;
 
 	/** Function to handle logging error messages */
-	private static BiConsumer<List<String>, String> errorWriter;
+	private static BiConsumer<String, String> errorWriter;
 
 
 	/** Buffered status log writer */
@@ -38,32 +38,11 @@ public class Log
 	/** Buffered error log writer */
 	private static PrintWriter errorFileWriter;
 
-	/** Static code which runs upon the first use of this class */
-	static
-	{
-		try
-		{
-			// Open the writers and leave them open.
-			statusFileWriter = new PrintWriter(new BufferedWriter(new FileWriter("status.log", true)));
-			errorFileWriter = new PrintWriter(new BufferedWriter(new FileWriter("error.log", true)));
-
-			// Register a shutdown hook so the writers release file locks upon program end.
-			Runtime.getRuntime().addShutdownHook(new Thread(() ->
-			{
-				statusFileWriter.close();
-				errorFileWriter.close();
-			}));
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Set the function to handle logging status messages.
 	 */
-	public static void setStatusWriter(BiConsumer<List<String>, String> consumer)
+	public static void setStatusWriter(BiConsumer<String, String> consumer)
 	{
 		statusWriter = consumer;
 	}
@@ -71,11 +50,54 @@ public class Log
 	/**
 	 * Set the function to handle logging error messages.
 	 */
-	public static void setErrorWriter(BiConsumer<List<String>, String> consumer)
+	public static void setErrorWriter(BiConsumer<String, String> consumer)
 	{
 		errorWriter = consumer;
 	}
 
+
+	public static void status(List<String> command, String status, List<Pair<Long, String>> rows)
+	{
+		StringBuilder build = new StringBuilder();
+
+		for (Pair<Long, String> row : rows)
+		{
+			build.append(row.getRight());
+			build.append(NEWLINE);
+		}
+
+		build.append(NEWLINE);
+		build.append(status);
+
+		statusWriter.accept(String.join(" ", command), build.toString());
+
+
+		// Receive and format the selected rows.
+		StringBuilder dataBuilder = new StringBuilder();
+		for (Pair<Long, String> row : rows)
+		{
+			StringBuilder builder = new StringBuilder();
+			for (int i = 0; i < 4 - (""+row.getLeft()).length(); i++)
+			{
+				dataBuilder.append(" ");
+			}
+
+			dataBuilder.append(row.getLeft());
+			dataBuilder.append(" - ");
+			dataBuilder.append(row.getRight());
+			dataBuilder.append(NEWLINE);
+		}
+
+		if (WorkbenchOptions.USE_STATUS_LOG)
+		{
+			setUpStatusLog();
+			statusFileWriter.println("(" + String.join(" ", command) + ")");
+			statusFileWriter.print(dataBuilder.toString());
+			statusFileWriter.println(status);
+			statusFileWriter.println();
+			statusFileWriter.flush();
+		}
+	}
 
 	/**
 	 * Log an SQL status message.
@@ -85,12 +107,15 @@ public class Log
 	 */
 	public static void status(List<String> command, String status)
 	{
-		String out = status + NEWLINE + "(" + String.join(" ", command) + ")";
-		statusWriter.accept(command, out);
+		statusWriter.accept(String.join(" ", command), status);
 
 		if (WorkbenchOptions.USE_STATUS_LOG)
 		{
-			statusFileWriter.println(out + NEWLINE);
+			setUpStatusLog();
+			statusFileWriter.println("(" + String.join(" ", command) + ")");
+			statusFileWriter.println(status);
+			statusFileWriter.println();
+			statusFileWriter.flush();
 		}
 	}
 
@@ -102,12 +127,15 @@ public class Log
 	 */
 	public static void error(List<String> command, String error)
 	{
-		String out = error + NEWLINE + "(" + String.join(" ", command) + ")";
-		errorWriter.accept(command, out);
+		errorWriter.accept(String.join(" ", command), error);
 
 		if (WorkbenchOptions.USE_ERROR_LOG)
 		{
-			errorFileWriter.println(out + NEWLINE);
+			setUpErrorLog();
+			errorFileWriter.println(error);
+			errorFileWriter.println("(" + String.join(" ", command) + ")");
+			errorFileWriter.println();
+			errorFileWriter.flush();
 		}
 	}
 
@@ -130,11 +158,58 @@ public class Log
 		indexString = indexString.replaceAll(".", " ") + "^";
 
 		String out = error + NEWLINE + "(" + String.join(" ", command) + ")" + NEWLINE + indexString;
-		errorWriter.accept(command, out);
+		errorWriter.accept(String.join(" ", command), out);
 
 		if (WorkbenchOptions.USE_ERROR_LOG)
 		{
-			errorFileWriter.println(out + NEWLINE);
+			setUpErrorLog();
+			errorFileWriter.println(out);
+			errorFileWriter.println();
+			errorFileWriter.flush();
+		}
+	}
+
+	private static void setUpStatusLog()
+	{
+		if (statusFileWriter == null)
+		{
+			try
+			{
+				// Open the writers and leave them open.
+				statusFileWriter = new PrintWriter(new BufferedWriter(new FileWriter("status.log", true)));
+
+				// Register a shutdown hook so the writers release file locks upon program end.
+				Runtime.getRuntime().addShutdownHook(new Thread(() ->
+				{
+					statusFileWriter.close();
+				}));
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void setUpErrorLog()
+	{
+		if (errorFileWriter == null)
+		{
+			try
+			{
+				// Open the writers and leave them open.
+				errorFileWriter = new PrintWriter(new BufferedWriter(new FileWriter("error.log", true)));
+
+				// Register a shutdown hook so the writers release file locks upon program end.
+				Runtime.getRuntime().addShutdownHook(new Thread(() ->
+				{
+					errorFileWriter.close();
+				}));
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 }

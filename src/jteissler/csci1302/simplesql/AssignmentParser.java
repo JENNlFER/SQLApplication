@@ -319,18 +319,8 @@ public class AssignmentParser implements Parser
 													List<Pair<Long, String>> rows = this.database.select(database, table, null);
 
 													// Receive and format the selected rows.
-													String data = "";
-													for (Pair<Long, String> row : rows)
-													{
-														StringBuilder builder = new StringBuilder();
-														for (int i = 0; i < 4 - (""+row.getLeft()).length(); i++)
-														{
-															builder.append(" ");
-														}
-														data += System.lineSeparator() + builder.toString() + row.getLeft() + " - " + row.getRight();
-													}
 
-													Log.status(args, rows.size() + " row(s) were selected from table \"" + table + "\" in database \"" + database + "\"." + data);
+													Log.status(args, rows.size() + " row(s) were selected from table \"" + table + "\" in database \"" + database + "\".", rows);
 												}
 												catch (SQLException e)
 												{
@@ -358,19 +348,7 @@ public class AssignmentParser implements Parser
 																			// Send the SELECT WHERE VALUE = ? command to the StringDatabase.
 																			List<Pair<Long, String>> rows = this.database.select(database, table, value);
 
-																			// Receive and format the selected rows.
-																			String data = "";
-																			for (Pair<Long, String> row : rows)
-																			{
-																				StringBuilder builder = new StringBuilder();
-																				for (int i = 0; i < 4 - (""+row.getLeft()).length(); i++)
-																				{
-																					builder.append(" ");
-																				}
-																				data += System.lineSeparator() + builder.toString() + row.getLeft() + " - " + row.getRight();
-																			}
-
-																			Log.status(args, rows.size() + " row(s) matching value \"" + value + "\" were selected from table \"" + table + "\" in database \"" + database + "\"." + data);
+																			Log.status(args, rows.size() + " row(s) matching value \"" + value + "\" were selected from table \"" + table + "\" in database \"" + database + "\".", rows);
 																		}
 																		catch (SQLException e)
 																		{

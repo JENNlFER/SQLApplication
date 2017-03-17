@@ -7,17 +7,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Callback;
 import jteissler.csci1302.simplesql.AssignmentParser;
 import jteissler.csci1302.simplesql.Log;
+import jteissler.csci1302.simplesql.Pair;
 import jteissler.csci1302.simplesql.Parser;
 import jteissler.csci1302.simplesql.SQLDatabase;
 
@@ -37,6 +45,9 @@ public class SQLWorkbench
 	private Stage aboutStage;
 	private CommandSelector selector;
 	private Parser sql;
+
+	private Image success;
+	private Image failure;
 
 	@FXML
 	private Window parentWindow;
@@ -88,44 +99,60 @@ public class SQLWorkbench
 	private TextArea commandField;
 
 	@FXML
+	private TextArea outputField;
+
+	@FXML
 	private ListView<String> commandLog;
 	private ObservableList<String> commands = FXCollections.observableArrayList();
 
 	@FXML
-	private ListView statusLog;
-	private ObservableList statuses = FXCollections.observableArrayList();
-
-	@FXML
 	private void initialize()
 	{
+		success = new Image("file:resources/status.png");
+		failure = new Image("file:resources/error.png");
+
 		sql = new AssignmentParser(new SQLDatabase());
 		selector = new CommandSelector(commandField);
 
 		commandLog.setItems(commands);
-		statusLog.setItems(statuses);
+/*
+		statusLog.setCellFactory((ListView<Pair<Boolean, String>> list) -> new ListCell<Pair<Boolean, String>>()
+		{
+			@Override
+			public void updateItem(Pair<Boolean, String> item, boolean empty)
+			{
+				super.updateItem(item, empty);
+
+				if (!empty || item != null)
+				{
+					Rectangle rect = new Rectangle(20, 20);
+					rect.setFill(Color.PURPLE);
+					setGraphic(rect);
+					setText(item.getRight());
+				}
+				else
+				{
+					setGraphic(null);
+					setText(null);
+				}
+			}
+		});*/
+
 
 		Log.setStatusWriter((command, status) ->
 		{
-			if (!command.isEmpty())
-			{
-				commands.add((commands.size() + 1) + ": " + String.join(" ", command));
-				commandLog.scrollTo(commands.size() - 1);
-			}
-
-			statuses.add(status);
-			statusLog.scrollTo(statuses.size() - 1);
+			commands.add(command);
+			commandLog.scrollTo(commands.size() - 1);
+			outputField.setText(status);
+			outputField.positionCaret(status.length());
 		});
 
 		Log.setErrorWriter((command, status) ->
 		{
-			if (!command.isEmpty())
-			{
-				commands.add((commands.size() + 1) + ": " + String.join(" ", command));
-				commandLog.scrollTo(commands.size() - 1);
-			}
-
-			statuses.add(status);
-			statusLog.scrollTo(statuses.size() - 1);
+			commands.add(command);
+			commandLog.scrollTo(commands.size() - 1);
+			outputField.setText(status);
+			outputField.positionCaret(status.length());
 		});
 
 		structureRoot = new TreeItem<>("SQL Database Schema");
@@ -200,8 +227,10 @@ public class SQLWorkbench
 				String css = getClass().getResource("resources/workbench.css").toExternalForm();
 				scene.getStylesheets().add(css);
 				aboutStage.setTitle("SQL Workbench - About");
-				aboutStage.show();
 				aboutStage.setOnCloseRequest(e -> preferencesStage = null);
+				aboutStage.setResizable(false);
+				aboutStage.show();
+
 
 
 			}
