@@ -153,7 +153,6 @@ public class SQLWorkbench
 
 		structureRoot = new TreeItem<>("SQL Database Schema");
 		structure.setRoot(structureRoot);
-		walkDirectoryTree();
 		structureRoot.setExpanded(true);
 	}
 
@@ -241,16 +240,23 @@ public class SQLWorkbench
 		}
 	}
 
+	/*
+		This is the action event that handles being able to open the file chooser window
+		and select a script to open. This method takes the script and opens it, and then reads
+		from it and puts that text to the commandField.
+	 */
+
 	@FXML
 	private void onOpenScript(ActionEvent event)
 	{
-
+		//uses the filechooser class to open the window to select files to choose from.
 		FileChooser fc = new FileChooser();
 		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Sql Scripts", "*." + WorkbenchOptions.getSaveExtension());
 
+		//adds a filter to look for a specific file
 		fc.getExtensionFilters().add(filter);
 
-
+		//shows the dialog box to choose the files from
 		File returnVal = fc.showOpenDialog(parentWindow);
 		if (returnVal == null)
 		{
@@ -260,6 +266,7 @@ public class SQLWorkbench
 		try
 		{
 
+			//reads the file from scanner
 			Scanner inFile = new Scanner(returnVal);
 
 			String someString = "";
@@ -269,6 +276,7 @@ public class SQLWorkbench
 				someString = inFile.useDelimiter("\\Z").next();
 			}
 
+			//sets the text from the script inside the commandField
 			commandField.setText(someString);
 
 		}
@@ -279,12 +287,20 @@ public class SQLWorkbench
 
 	}
 
+	//sets the parentwindow
 	@FXML
 	private void setParent(Window parent)
 	{
 		parentWindow = parent;
 	}
 
+
+	/*
+
+		Allows you to run a script. Functionalities include everything from open script, and is extended functionality capability to
+		run the commands inside the script. Passes the text to the parser and proceeds to run commands.
+
+	 */
 	@FXML
 	private void onRunScript(ActionEvent event)
 	{
@@ -315,7 +331,9 @@ public class SQLWorkbench
 
 			commandField.setText(someString);
 
+			//parses the command.
 			sql.parse(selector.getAllCommands());
+			//refer to walk directory tree method
 			walkDirectoryTree();
 
 		}
@@ -327,6 +345,12 @@ public class SQLWorkbench
 	}
 
 
+	/*
+
+		Saves the script. Opens Filechooser, and the dialog box, however this time utilizing filechooser's save dialog
+		method. The file that is being saved is filled with the text from the commandField.
+
+	 */
 	@FXML
 	private void onSaveScript(ActionEvent event)
 	{
@@ -335,7 +359,7 @@ public class SQLWorkbench
 		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Sql Scripts", "*." + WorkbenchOptions.getSaveExtension());
 
 		fc.getExtensionFilters().add(filter);
-
+		//shows save dialog box.
 		File returnVal = fc.showSaveDialog(parentWindow);
 
 		if (returnVal == null)
@@ -350,6 +374,7 @@ public class SQLWorkbench
 			writer = new PrintWriter(new FileWriter(returnVal, true));
 
 
+			//prints the commandfield text
 			writer.print(someString);
 
 			writer.close();
@@ -369,37 +394,41 @@ public class SQLWorkbench
 
 	}
 
+	/*
+		The following commands work just like windows' version of cut,copy,paste,undo,redo
+	 */
 
+	//cuts the commandField text that is highlighted
 	@FXML
 	private void onCut(ActionEvent event)
 	{
 		commandField.cut();
 	}
-
+	//copies the commandField text that is highlighted
 	@FXML
 	private void onCopy(ActionEvent event)
 	{
 		commandField.copy();
 	}
-
+	//pastes the text that is stored in the copy/cut to the command field where the cursor is.
 	@FXML
 	private void onPaste(ActionEvent event)
 	{
 		commandField.paste();
 	}
-
+	//undo the previous action done to the commandfield
 	@FXML
 	private void onUndo(ActionEvent event)
 	{
 		commandField.undo();
 	}
-
+	//redo the previous action done to the commandField
 	@FXML
 	private void onRedo(ActionEvent event)
 	{
 		commandField.redo();
 	}
-
+	//opens the preferences window works much like the main class method start() that sets up the SQL Workbench
 	@FXML
 	private void onPreferences(ActionEvent event)
 	{

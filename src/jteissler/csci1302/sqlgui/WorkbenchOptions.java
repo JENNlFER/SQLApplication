@@ -10,6 +10,30 @@ public class WorkbenchOptions
 {
 	private static Preferences preferences;
 
+	//the enum that contains all of the command dividers.
+	// in our case we have options for semicolon, each line, and an empty line.
+	/*
+	i.e
+	semicolon :
+
+	CREATE DATABASE yeah;
+	DROP DATABASE yeah;
+
+	each line :
+
+	CREATE DATABASE yeah
+	DROP DATABASE yeah
+
+	empty line (THE EMPTY LINE BETWEEN THE TWO COMMANDS IS REQUIRED!):
+
+	CREATE
+	DATABASE yeah
+
+	DROP
+	DATABASE
+	yeah
+
+	 */
 	public enum CommandDivider
 	{
 		SEMICOLON, EACH_LINE, EMPTY_LINE
