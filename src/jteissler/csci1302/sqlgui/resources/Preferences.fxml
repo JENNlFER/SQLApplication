@@ -18,11 +18,11 @@
                <tooltip>
                   <Tooltip text="The file extension which is used to denote SQL table files" />
                </tooltip></TextField>
-            <TextField fx:id="savedFileExt" layoutX="222.0" layoutY="69.0" onKeyTyped="#onSavedKeyTyped" prefHeight="34.0" prefWidth="267.0">
+            <TextField fx:id="savedFileExt" layoutX="222.0" layoutY="69.0" onKeyReleased="#onSavedKeyTyped" prefHeight="34.0" prefWidth="267.0">
                <tooltip>
                   <Tooltip text="The file extension which is used to denote SQL save files" />
                </tooltip></TextField>
-            <TextField fx:id="masterDirectoryName" layoutX="222.0" layoutY="121.0" onKeyTyped="#onMasterDirectoryKeyTyped" prefHeight="34.0" prefWidth="267.0">
+            <TextField fx:id="masterDirectoryName" layoutX="222.0" layoutY="121.0" onKeyReleased="#onMasterDirectoryKeyTyped" prefHeight="34.0" prefWidth="267.0">
                <tooltip>
                   <Tooltip text="The name of the directory in which all SQL data is stored" />
                </tooltip></TextField>

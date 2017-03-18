@@ -11,17 +11,19 @@ import java.util.prefs.Preferences;
 public class Main extends Application
 {
 	@Override
-	public void start(Stage primaryStage) throws Exception
+	public void start(Stage stage) throws Exception
 	{
 		new WorkbenchOptions();
 
 		Parent root = FXMLLoader.load(getClass().getResource("resources/workbench.fxml"));
-		primaryStage.setTitle("SQL Workbench");
+		stage.setTitle("SQL Workbench");
 		Scene scene = new Scene(root, 800, 600);
 		String css = getClass().getResource("resources/workbench.css").toExternalForm();
 		scene.getStylesheets().add(css);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		stage.setMinWidth(580);
+		stage.setMinHeight(350);
+		stage.setScene(scene);
+		stage.show();
 	}
 
 

@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Callback;
@@ -221,6 +222,8 @@ public class SQLWorkbench
 				aboutStage.setScene(scene);
 				String css = getClass().getResource("resources/workbench.css").toExternalForm();
 				scene.getStylesheets().add(css);
+				aboutStage.initOwner(parentWindow);
+				aboutStage.initModality(Modality.APPLICATION_MODAL);
 				aboutStage.setTitle("SQL Workbench - About");
 				aboutStage.setOnCloseRequest(e -> preferencesStage = null);
 				aboutStage.setResizable(false);
@@ -410,24 +413,13 @@ public class SQLWorkbench
 				preferencesStage.setScene(scene);
 				String css = getClass().getResource("resources/workbench.css").toExternalForm();
 				scene.getStylesheets().add(css);
+				preferencesStage.initOwner(parentWindow);
+				preferencesStage.initModality(Modality.APPLICATION_MODAL);
 				preferencesStage.setTitle("SQL Workbench - Preferences");
 				preferencesStage.setResizable(false);
 				preferencesStage.setOnCloseRequest(e -> {preferencesStage = null; walkDirectoryTree();});
 				preferencesStage.show();
 
-
-				/*
-				Equivalent to
-				preferencesStage.setOnCloseRequest(new EventHandler<WindowEvent>()
-                {
-                    @Override
-                    public void handle(WindowEvent event)
-                    {
-                        preferencesStage = null;
-                    }
-                });
-
-				 */
 
 			}
 			catch (IOException e)
