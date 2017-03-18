@@ -448,7 +448,7 @@ public class AssignmentParser implements Parser
 												{
 													// Send the INSERT command to the StringDatabase.
 													this.database.insert(database, table, value);
-													Log.status(args, "Values \"" + value + "\" was inserted into table \"" + table + "\" in database \"" + database + "\".");
+													Log.status(args, "Value \"" + value + "\" was inserted into table \"" + table + "\" in database \"" + database + "\".");
 												}
 												catch (SQLException e)
 												{

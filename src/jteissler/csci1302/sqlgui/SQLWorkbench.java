@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
@@ -17,6 +18,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -102,57 +104,50 @@ public class SQLWorkbench
 	private TextArea outputField;
 
 	@FXML
-	private ListView<String> commandLog;
-	private ObservableList<String> commands = FXCollections.observableArrayList();
+	private ListView<HBox> commandLog;
+	private ObservableList<HBox> commands = FXCollections.observableArrayList();
 
 	@FXML
 	private void initialize()
 	{
-		success = new Image("file:resources/status.png");
-		failure = new Image("file:resources/error.png");
+		success = new Image(getClass().getResourceAsStream("resources/status.png"));
+		failure = new Image(getClass().getResourceAsStream("resources/error.png"));
 
 		sql = new AssignmentParser(new SQLDatabase());
 		selector = new CommandSelector(commandField);
 
 		commandLog.setItems(commands);
-/*
-		statusLog.setCellFactory((ListView<Pair<Boolean, String>> list) -> new ListCell<Pair<Boolean, String>>()
-		{
-			@Override
-			public void updateItem(Pair<Boolean, String> item, boolean empty)
-			{
-				super.updateItem(item, empty);
-
-				if (!empty || item != null)
-				{
-					Rectangle rect = new Rectangle(20, 20);
-					rect.setFill(Color.PURPLE);
-					setGraphic(rect);
-					setText(item.getRight());
-				}
-				else
-				{
-					setGraphic(null);
-					setText(null);
-				}
-			}
-		});*/
 
 
 		Log.setStatusWriter((command, status) ->
 		{
-			commands.add(command);
+			ImageView view = new ImageView(success);
+			view.setFitHeight(18);
+			view.setFitWidth(18);
+			HBox box = new HBox(view, new Label("[" + (commands.size() + 1) + "]"), new Label(command + ";"));
+			box.setSpacing(10);
+			commands.add(box);
 			commandLog.scrollTo(commands.size() - 1);
-			outputField.setText(status);
-			outputField.positionCaret(status.length());
+
+			outputField.clear();
+			outputField.appendText(status);
 		});
 
 		Log.setErrorWriter((command, status) ->
 		{
-			commands.add(command);
-			commandLog.scrollTo(commands.size() - 1);
-			outputField.setText(status);
-			outputField.positionCaret(status.length());
+			if (!status.equals("No command entered."))
+			{
+				ImageView view = new ImageView(failure);
+				view.setFitHeight(18);
+				view.setFitWidth(18);
+				HBox box = new HBox(view, new Label("[" + (commands.size() + 1) + "]"), new Label(command + ";"));
+				box.setSpacing(10);
+				commands.add(box);
+				commandLog.scrollTo(commands.size() - 1);
+			}
+
+			outputField.clear();
+			outputField.appendText(status);
 		});
 
 		structureRoot = new TreeItem<>("SQL Database Schema");
@@ -184,7 +179,7 @@ public class SQLWorkbench
 	private void walkDirectoryTree()
 	{
 		structureRoot.getChildren().clear();
-		File dir = new File(WorkbenchOptions.MASTER_DIRECTORY);
+		File dir = new File(WorkbenchOptions.getMasterFile());
 		File[] files = dir.listFiles();
 
 		if (files == null)
@@ -201,9 +196,9 @@ public class SQLWorkbench
 
 				for (File subFile : subFiles)
 				{
-					if (subFile.isFile() && subFile.getName().endsWith("." + WorkbenchOptions.TABLE_FILE_EXTENSION))
+					if (subFile.isFile() && subFile.getName().endsWith("." + WorkbenchOptions.getTableExtension()))
 					{
-						database.getChildren().add(new TreeItem<>(subFile.getName().replace("." + WorkbenchOptions.TABLE_FILE_EXTENSION, "")));
+						database.getChildren().add(new TreeItem<>(subFile.getName().replace("." + WorkbenchOptions.getTableExtension(), "")));
 					}
 				}
 
@@ -248,7 +243,7 @@ public class SQLWorkbench
 	{
 
 		FileChooser fc = new FileChooser();
-		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Sql Scripts", "*." + WorkbenchOptions.SAVE_FILE_EXTENSION);
+		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Sql Scripts", "*." + WorkbenchOptions.getSaveExtension());
 
 		fc.getExtensionFilters().add(filter);
 
@@ -292,7 +287,7 @@ public class SQLWorkbench
 	{
 
 		FileChooser fc = new FileChooser();
-		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Sql Scripts", "*." + WorkbenchOptions.SAVE_FILE_EXTENSION);
+		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Sql Scripts", "*." + WorkbenchOptions.getSaveExtension());
 
 		fc.getExtensionFilters().add(filter);
 
@@ -334,7 +329,7 @@ public class SQLWorkbench
 	{
 
 		FileChooser fc = new FileChooser();
-		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Sql Scripts", "*." + WorkbenchOptions.SAVE_FILE_EXTENSION);
+		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Sql Scripts", "*." + WorkbenchOptions.getSaveExtension());
 
 		fc.getExtensionFilters().add(filter);
 
@@ -360,6 +355,13 @@ public class SQLWorkbench
 		catch (Exception e)
 		{
 			e.printStackTrace();
+		}
+		finally
+		{
+			if (writer != null)
+			{
+				writer.close();
+			}
 		}
 
 	}

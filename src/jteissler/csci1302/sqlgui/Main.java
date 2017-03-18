@@ -6,12 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.prefs.Preferences;
+
 public class Main extends Application
 {
-
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
+		new WorkbenchOptions();
+
 		Parent root = FXMLLoader.load(getClass().getResource("resources/workbench.fxml"));
 		primaryStage.setTitle("SQL Workbench");
 		Scene scene = new Scene(root, 800, 600);

@@ -98,7 +98,7 @@
 }
 
 
-.text-area .content{
+.text-area .content {
     -fx-background-color: #1d1f27;
 
 }
@@ -121,21 +121,6 @@
 .tab-pane {
 	-fx-background-color: #333645;
 
-}
-
-.list-view .scroll-bar:horizontal .increment-arrow,
-.list-view .scroll-bar:horizontal .decrement-arrow,
-.list-view .scroll-bar:horizontal .increment-button,
-.list-view .scroll-bar:horizontal .decrement-button {
-    -fx-padding:0;
-}
-
-
-.list-view .scroll-bar:vertical .increment-arrow,
-.list-view .scroll-bar:vertical .decrement-arrow,
-.list-view .scroll-bar:vertical .increment-button,
-.list-view .scroll-bar:vertical .decrement-button {
-    -fx-padding:0;
 }
 
 .list-view .list-cell .text-flow {
@@ -285,3 +270,30 @@
 }
 
 
+.scroll-bar:horizontal,
+.scroll-bar:vertical {
+    -fx-background-color: #262934;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+    -fx-background-color: #262934;
+    -fx-background-radius: 0;
+    -fx-background-insets: 3;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb  {
+    -fx-background-color: grey;
+    -fx-background-insets: 3;
+    -fx-background-radius: 0;
+}
+
+.increment-button:hover,
+.decrement-button:hover {
+    -fx-background-color: #333645;
+}
+
+.corner {
+    -fx-background-color: transparent;
+}

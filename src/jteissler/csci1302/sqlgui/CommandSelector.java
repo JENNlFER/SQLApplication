@@ -31,7 +31,7 @@ public class CommandSelector
 			return new ArrayList<>();
 		}
 
-		if (WorkbenchOptions.EXECUTE_HIGHLIGHTED)
+		if (WorkbenchOptions.doHighlightedCommands())
 		{
 			String selection = textArea.getSelectedText().trim();
 
@@ -40,7 +40,7 @@ public class CommandSelector
 				String[] commands = null;
 				List<String> cleanedCommands = new ArrayList<>();
 
-				switch (WorkbenchOptions.COMMAND_DIVIDER)
+				switch (WorkbenchOptions.getCommandDivider())
 				{
 					case SEMICOLON:
 					{
@@ -82,7 +82,7 @@ public class CommandSelector
 			return new ArrayList<>();
 		}
 
-		switch (WorkbenchOptions.COMMAND_DIVIDER)
+		switch (WorkbenchOptions.getCommandDivider())
 		{
 			case SEMICOLON:
 			{
@@ -100,8 +100,6 @@ public class CommandSelector
 						begin = i;
 					}
 				}
-
-				++end;
 
 				break;
 			}
@@ -171,7 +169,7 @@ public class CommandSelector
 			}
 		}
 
-		return Collections.singletonList(textString.substring(begin, end).replaceAll("\\r\\n?|\\n|\\t|;", " "));
+		return Collections.singletonList(textString.substring(begin, end).replaceAll("\\r\\n?|\\n|\\t|;", " ").trim());
 	}
 
 	/**
@@ -184,7 +182,7 @@ public class CommandSelector
 		String[] split = null;
 		List<String> commands = new ArrayList<>();
 
-		switch (WorkbenchOptions.COMMAND_DIVIDER)
+		switch (WorkbenchOptions.getCommandDivider())
 		{
 			case SEMICOLON:
 			{

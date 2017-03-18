@@ -7,13 +7,15 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
+import java.util.prefs.Preferences;
+
 
 /**
  * Created by Kyle on 3/15/2017.
  */
 public class SQLPreferences
 {
-
+    private Preferences preferences;
 
     @FXML
     private CheckBox execHighlighted;
@@ -45,16 +47,15 @@ public class SQLPreferences
     @FXML
     private void initialize()
     {
+        tableFileExt.setText(WorkbenchOptions.getTableExtension());
+        savedFileExt.setText(WorkbenchOptions.getSaveExtension());
+        masterDirectoryName.setText(WorkbenchOptions.getMasterFile());
 
-        tableFileExt.setText(WorkbenchOptions.TABLE_FILE_EXTENSION);
-        savedFileExt.setText(WorkbenchOptions.SAVE_FILE_EXTENSION);
-        masterDirectoryName.setText(WorkbenchOptions.MASTER_DIRECTORY);
+        execHighlighted.setSelected(WorkbenchOptions.doHighlightedCommands());
+        sqlPrintStatus.setSelected(WorkbenchOptions.doStatusLog());
+        sqlPrintError.setSelected(WorkbenchOptions.doErrorLog());
 
-        execHighlighted.setSelected(WorkbenchOptions.EXECUTE_HIGHLIGHTED);
-        sqlPrintStatus.setSelected(WorkbenchOptions.USE_STATUS_LOG);
-        sqlPrintError.setSelected(WorkbenchOptions.USE_ERROR_LOG);
-
-        switch (WorkbenchOptions.COMMAND_DIVIDER)
+        switch (WorkbenchOptions.getCommandDivider())
         {
 
             case SEMICOLON:
@@ -74,30 +75,31 @@ public class SQLPreferences
     @FXML
     private void onExecHighlightedToggle(ActionEvent event)
     {
-        WorkbenchOptions.EXECUTE_HIGHLIGHTED = execHighlighted.isSelected();
+        WorkbenchOptions.setHighlightedCommands(execHighlighted.isSelected());
     }
 
     @FXML
     private void onPrintStatusToggle(ActionEvent event)
     {
-        WorkbenchOptions.USE_STATUS_LOG = sqlPrintStatus.isSelected();
+        WorkbenchOptions.setStatusLog(sqlPrintStatus.isSelected());
     }
 
     @FXML
     private void onPrintErrorToggle(ActionEvent event)
     {
-        WorkbenchOptions.USE_ERROR_LOG = sqlPrintError.isSelected();
+        WorkbenchOptions.setErrorLog(sqlPrintError.isSelected());
     }
 
     @FXML
     private void onTableKeyTyped(KeyEvent event)
     {
-        if (tableFileExt.getText() != null && !(tableFileExt.getText().isEmpty()))
+        if (tableFileExt.getText() != null)
         {
-            WorkbenchOptions.TABLE_FILE_EXTENSION = tableFileExt.getText();
-        } else
+            WorkbenchOptions.setTableExtension(tableFileExt.getText());
+        }
+        else
         {
-            WorkbenchOptions.TABLE_FILE_EXTENSION = "tab";
+            WorkbenchOptions.setTableExtension("tab");
         }
 
     }
@@ -105,12 +107,13 @@ public class SQLPreferences
     @FXML
     private void onSavedKeyTyped(KeyEvent event)
     {
-        if (savedFileExt.getText() != null && !(tableFileExt.getText().isEmpty()))
+        if (savedFileExt.getText() != null)
         {
-            WorkbenchOptions.SAVE_FILE_EXTENSION = savedFileExt.getText();
-        } else
+            WorkbenchOptions.setSaveExtension(savedFileExt.getText());
+        }
+        else
         {
-            WorkbenchOptions.SAVE_FILE_EXTENSION = "sql";
+            WorkbenchOptions.setSaveExtension("sql");
         }
     }
 
@@ -119,10 +122,11 @@ public class SQLPreferences
     {
         if (masterDirectoryName.getText() != null && !(tableFileExt.getText().isEmpty()))
         {
-            WorkbenchOptions.MASTER_DIRECTORY = masterDirectoryName.getText();
-        } else
+            WorkbenchOptions.setMasterFile(masterDirectoryName.getText());
+        }
+        else
         {
-            WorkbenchOptions.MASTER_DIRECTORY = "sql_data";
+            WorkbenchOptions.setMasterFile("sql_data");
         }
     }
 
@@ -132,7 +136,7 @@ public class SQLPreferences
         if (emptyLineButton.isSelected()) emptyLineButton.setSelected(false);
         if (eachLineButton.isSelected()) eachLineButton.setSelected(false);
 
-        WorkbenchOptions.COMMAND_DIVIDER = WorkbenchOptions.CommandDivider.SEMICOLON;
+        WorkbenchOptions.setCommandDivider(WorkbenchOptions.CommandDivider.SEMICOLON);
 
     }
 
@@ -142,7 +146,7 @@ public class SQLPreferences
         if (semiButton.isSelected()) semiButton.setSelected(false);
         if (eachLineButton.isSelected()) eachLineButton.setSelected(false);
 
-        WorkbenchOptions.COMMAND_DIVIDER = WorkbenchOptions.CommandDivider.EMPTY_LINE;
+        WorkbenchOptions.setCommandDivider(WorkbenchOptions.CommandDivider.EMPTY_LINE);
     }
 
     @FXML
@@ -151,7 +155,7 @@ public class SQLPreferences
         if (emptyLineButton.isSelected()) emptyLineButton.setSelected(false);
         if (semiButton.isSelected()) semiButton.setSelected(false);
 
-        WorkbenchOptions.COMMAND_DIVIDER = WorkbenchOptions.CommandDivider.EACH_LINE;
+        WorkbenchOptions.setCommandDivider(WorkbenchOptions.CommandDivider.EACH_LINE);
 
     }
 }

@@ -88,7 +88,7 @@ public class Log
 			dataBuilder.append(NEWLINE);
 		}
 
-		if (WorkbenchOptions.USE_STATUS_LOG)
+		if (WorkbenchOptions.doStatusLog())
 		{
 			setUpStatusLog();
 			statusFileWriter.println("(" + String.join(" ", command) + ")");
@@ -109,7 +109,7 @@ public class Log
 	{
 		statusWriter.accept(String.join(" ", command), status);
 
-		if (WorkbenchOptions.USE_STATUS_LOG)
+		if (WorkbenchOptions.doStatusLog())
 		{
 			setUpStatusLog();
 			statusFileWriter.println("(" + String.join(" ", command) + ")");
@@ -129,7 +129,7 @@ public class Log
 	{
 		errorWriter.accept(String.join(" ", command), error);
 
-		if (WorkbenchOptions.USE_ERROR_LOG)
+		if (WorkbenchOptions.doErrorLog())
 		{
 			setUpErrorLog();
 			errorFileWriter.println(error);
@@ -160,7 +160,7 @@ public class Log
 		String out = error + NEWLINE + "(" + String.join(" ", command) + ")" + NEWLINE + indexString;
 		errorWriter.accept(String.join(" ", command), out);
 
-		if (WorkbenchOptions.USE_ERROR_LOG)
+		if (WorkbenchOptions.doErrorLog())
 		{
 			setUpErrorLog();
 			errorFileWriter.println(out);

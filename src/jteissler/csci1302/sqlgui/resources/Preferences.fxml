@@ -14,7 +14,7 @@
    <bottom>
       <Pane id="pane" prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="tableFileExt" layoutX="221.0" layoutY="17.0" onKeyTyped="#onTableKeyTyped" prefHeight="34.0" prefWidth="268.0">
+            <TextField fx:id="tableFileExt" layoutX="221.0" layoutY="17.0" onKeyReleased="#onTableKeyTyped" prefHeight="34.0" prefWidth="268.0">
                <tooltip>
                   <Tooltip text="The file extension which is used to denote SQL table files" />
                </tooltip></TextField>
