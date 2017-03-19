@@ -187,6 +187,11 @@ public class CommandSelector
 			}
 		}
 
+		if (end == 0)
+		{
+			end = textString.length();
+		}
+
 		// Clean the command of newline and carriage return chars, then return
 		return Collections.singletonList(textString.substring(begin, end).replaceAll("\\r\\n?|\\n|\\t|;", " ").trim());
 	}

@@ -193,6 +193,9 @@ public class SQLWorkbench
 		structureRoot = new TreeItem<>("SQL Database Schema");
 		structure.setRoot(structureRoot);
 		structureRoot.setExpanded(true);
+
+		// Update directory tree if anything is pre-existing
+		walkDirectoryTree();
 	}
 
 	/**
