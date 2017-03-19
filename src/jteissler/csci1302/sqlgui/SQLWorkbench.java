@@ -295,8 +295,6 @@ public class SQLWorkbench
 				aboutStage.setOnCloseRequest(e -> preferencesStage = null);
 				aboutStage.setResizable(false);
 				aboutStage.show();
-
-				throw new IOException("Filed not abel to blag");
 			}
 			catch (IOException e)
 			{
