@@ -12,8 +12,8 @@ import java.io.StringWriter;
 /**
  * Pops up a dialog with an error message and a stack trace.
  *
- * @author J Teissler
- * @date 3/19/17
+ * @author J Teissler & Kyle Turner
+ *         Created on 3/15/17
  */
 public class ExceptionPopUp
 {
