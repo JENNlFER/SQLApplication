@@ -1,6 +1,5 @@
 package jteissler.csci1302.simplesql;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import jteissler.csci1302.sqlgui.WorkbenchOptions;
 
 import java.io.BufferedWriter;
